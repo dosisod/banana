@@ -1,22 +1,18 @@
-#include <iostream>
-#include <fstream>
 #include <string>
 
+#include "file.hpp"
+#include "screen.hpp"
+
 int main (int argc, char *argv[]) {
+	Screen screen;
+
 	if (argc!=2) {
-		std::cout << "banana takes exactly 1 parameter (for now)\n";
+		screen.write("banana takes exactly 1 parameter (for now)\n");
 	}
 
-	std::fstream file;
-	file.open(argv[1]);
+	File f(std::string(argv[1]));
 
-	if (file.is_open()) {
-		std::string line="";
-		while (std::getline(file,line)) {
-			std::cout << line << "\n";
-		}
-		file.close();
-	}
-	
+	screen.pause();
+
 	return 0;
 }
