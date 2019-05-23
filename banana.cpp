@@ -1,6 +1,5 @@
 #include <string>
 
-#include "file.hpp"
 #include "screen.hpp"
 
 int main (int argc, char *argv[]) {
@@ -8,9 +7,14 @@ int main (int argc, char *argv[]) {
 
 	if (argc!=2) {
 		screen.write("banana takes exactly 1 parameter (for now)\n");
+		screen.pause();
+
+		return -1;
 	}
 
-	File f(std::string(argv[1]));
+	File f { std::string(argv[1]) };
+
+	screen.render(&f);
 
 	screen.pause();
 
