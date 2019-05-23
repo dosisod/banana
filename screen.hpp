@@ -1,6 +1,8 @@
 #include <ncurses.h>
 #include <string>
 
+#include "file.hpp"
+
 class Screen {
 public:
 	Screen();
@@ -10,9 +12,13 @@ public:
 
 	void write(std::string s);
 
+	void render(File* f);
+
+	void home();
+	void setxy(int x, int y);
+
 private:
 	WINDOW* window;
 
-	int x=0; //x and y of terminal
-	int y=0;
+	int x, y; //x and y of terminal
 };
