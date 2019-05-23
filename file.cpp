@@ -17,3 +17,11 @@ File::File(std::string fn) {
 	}
 	stream.close();
 }
+
+int File::lines() {
+	return buffer.size();
+}
+
+std::string File::line(int n) {
+	return buffer[n];
+}
