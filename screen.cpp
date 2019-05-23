@@ -4,9 +4,9 @@
 #include "screen.hpp"
 
 Screen::Screen() {
-	setlocale(LC_ALL, "");
-	window=initscr();
-	noecho();
+	setlocale(LC_ALL, ""); //allow for unicode
+	window=initscr(); //init and clear screen
+	noecho(); //dont print characters to screen
 	refresh();
 }
 
@@ -27,19 +27,22 @@ void Screen::home() {
 }
 
 void Screen::setxy(int x, int y) {
-	wmove(window, x, y);
+	wmove(window, y, x+ruler+3);
 }
 
-void Screen::render(File* f) {
-	int ruler=std::log10(f->lines()+1)+1;
-
-	for (int i=0;i<f->lines();i++) {
+void Screen::render() {
+	for (int i=0;i<file->lines();i++) {
 		write(
-			std::string(ruler-(int)(std::log10(i+1)+1), ' ')+
-			std::to_string(i+1)+" "+
+			std::string(ruler-(int)(std::log10(i+1)+1), ' ')+ //calculate left spacing
+			std::to_string(i+1)+" "+ //print line number
 			"│ "+
-			f->line(i)+
+			file->line(i)+ //display line buffer
 			"\n"
 		);
 	}
+}
+
+void Screen::useBuffer(File* f) {
+	file=f;
+	ruler=std::log10(file->lines()+1)+1;
 }
