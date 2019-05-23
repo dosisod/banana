@@ -12,9 +12,11 @@ int main (int argc, char *argv[]) {
 		return -1;
 	}
 
-	File f { std::string(argv[1]) };
+	File f { std::string(argv[1]) }; //read file into file buffer
+	screen.useBuffer(&f); //set screen to use the file
 
-	screen.render(&f);
+	screen.render();
+	screen.home();
 
 	screen.pause();
 
