@@ -13,7 +13,7 @@ Screen::Screen() {
 }
 
 void Screen::update() {
-	getmaxyx(window, y, x);
+	getmaxyx(window, termy, termx);
 }
 
 Screen::~Screen() {
@@ -33,6 +33,10 @@ void Screen::home() {
 }
 
 void Screen::setxy(int x, int y) {
+	//make sure cursor stays within bounds
+	if (x<0||x>(termx-ruler-3)||y<0||y>termy||y>=file->lines()) {
+		return;
+	}
 	wmove(window, y, x+ruler+3);
 }
 

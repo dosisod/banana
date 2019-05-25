@@ -22,7 +22,10 @@ public:
 private:
 	WINDOW* window;
 
-	int x, y; //x and y of terminal
+	int currx=0;
+	int curry=0; //current xy of cursor
+
+	int termx, termy; //x and y dimension of terminal
 	void update(); //updates x and y
 
 	File* file; //needed for proper spacing
