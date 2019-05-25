@@ -18,6 +18,10 @@ int main (int argc, char *argv[]) {
 	screen.render();
 	screen.home();
 
+	do {
+		screen.listen();
+	} while (true);
+
 	screen.pause();
 
 	return 0;
