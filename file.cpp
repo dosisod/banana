@@ -23,5 +23,13 @@ int File::lines() {
 }
 
 std::string File::line(int n) {
-	return buffer[n];
+	std::string str=buffer[n];
+
+	int tabs=0;
+	for (int i=0;i<(int)str.length();i++) {
+		if (str[i]=='\t') tabs++;
+	}
+
+	//replace tabs with spaces and append original line
+	return std::string(tabs*tabsize, ' ')+buffer[n].substr(tabs);
 }
