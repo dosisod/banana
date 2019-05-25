@@ -8,6 +8,12 @@ Screen::Screen() {
 	window=initscr(); //init and clear screen
 	noecho(); //dont print characters to screen
 	refresh();
+
+	update();
+}
+
+void Screen::update() {
+	getmaxyx(window, y, x);
 }
 
 Screen::~Screen() {

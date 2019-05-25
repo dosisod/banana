@@ -23,6 +23,7 @@ private:
 	WINDOW* window;
 
 	int x, y; //x and y of terminal
+	void update(); //updates x and y
 
 	File* file; //needed for proper spacing
 	int ruler; //defined from file
