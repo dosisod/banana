@@ -43,11 +43,15 @@ void Screen::home() {
 }
 
 void Screen::setxy(int x, int y) {
+	//prevents cursor getting stuck when going to a shorter line
+	if (x>((int)file->line(y).length())) {
+		x=file->line(y).length();
+	}
+
 	//make sure cursor stays within bounds
 	if (
 		x<0||
 		x>=(termx-ruler-3)||
-		x>((int)file->line(curry).length())||
 		y<0||
 		y>termy||
 		y>=file->lines()
