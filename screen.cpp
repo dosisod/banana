@@ -32,10 +32,26 @@ void Screen::pause() {
 void Screen::listen() {
 	int c=getch();
 
-	if (c==KEY_LEFT) { delta(-1, 0); }
-	else if (c==KEY_RIGHT) { delta(1, 0); }
-	else if (c==KEY_DOWN) { delta(0, 1); }
-	else if (c==KEY_UP) { delta(0, -1); }
+	if (c==KEY_UP) {
+		delta(0, -1);
+	}
+	else if (c==KEY_DOWN) {
+		delta(0, 1);
+	}
+	else if (c==KEY_LEFT) {
+		if (currx==0&&curry>0) setxy(file->line(curry-1).length(), curry-1);
+		else delta(-1, 0);
+	}
+	else if (c==KEY_RIGHT) {
+		if (currx==(int)file->line(curry).length()&&curry<file->lines()) setxy(0, curry+1);
+		else delta(1, 0);
+	}
+	else if (c==KEY_END) {
+		setxy(file->line(curry).length(), curry);
+	}
+	else if (c==KEY_HOME) {
+		setxy(0, curry);
+	}
 }
 
 void Screen::home() {
@@ -43,6 +59,9 @@ void Screen::home() {
 }
 
 void Screen::setxy(int x, int y) {
+	//must be checked first or file->line(-1) could happen
+	if (y<0) return;
+
 	//prevents cursor getting stuck when going to a shorter line
 	if (x>((int)file->line(y).length())) {
 		x=file->line(y).length();
@@ -52,7 +71,6 @@ void Screen::setxy(int x, int y) {
 	if (
 		x<0||
 		x>=(termx-ruler-3)||
-		y<0||
 		y>termy||
 		y>=file->lines()
 	) return;
