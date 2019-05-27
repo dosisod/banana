@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 
+#include "line.hpp"
+
 class File {
 public:
 	File(std::string fn);
@@ -17,7 +19,7 @@ private:
 	std::string filename;
 
 	std::fstream stream; //stream is here as it can be used when reading and writing
-	std::vector<std::string> buffer; //contains the lines of the file
+	std::vector<Line*> buffer; //contains the lines of the file
 
 	int tabsize=4; //tabs are rendered as N spaces, and but will still be tabs after saving
 };

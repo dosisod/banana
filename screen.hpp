@@ -14,7 +14,7 @@ public:
 
 	void write(std::string s);
 
-	void render();
+	void render(); //draws state of file to screen
 
 	void home(); //goto home position
 	void setxy(int x, int y);
