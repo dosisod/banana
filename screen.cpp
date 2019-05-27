@@ -67,7 +67,7 @@ void Screen::home() {
 
 void Screen::setxy(int x, int y) {
 	//must be checked first or file->line(-1) could happen
-	if (y<0) return;
+	if (y<0||y>=file->lines()) return;
 
 	//prevents cursor getting stuck when going to a shorter line
 	if (x>((int)file->line(y).length())) {
@@ -78,8 +78,7 @@ void Screen::setxy(int x, int y) {
 	if (
 		x<0||
 		x>=(termx-ruler-3)||
-		y>termy||
-		y>=file->lines()
+		y>termy
 	) return;
 
 	currx=x; //update current position
