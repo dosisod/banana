@@ -52,6 +52,13 @@ void Screen::listen() {
 	else if (c==KEY_HOME) {
 		setxy(0, curry);
 	}
+	else if (c!=KEY_BACKSPACE) {
+		int tmpx=currx;
+
+		setxy(0, curry);
+		write(file->insert(c, tmpx, curry));
+		setxy(tmpx+1, curry);
+	}
 }
 
 void Screen::home() {

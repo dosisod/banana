@@ -33,3 +33,15 @@ std::string File::line(int n) {
 	//replace tabs with spaces and append original line
 	return std::string(tabs*tabsize, ' ')+buffer[n].substr(tabs);
 }
+
+int File::linesize(int n) {
+	return (int)line(n).length();
+}
+
+std::string File::insert(char c, int x, int y) {
+	//insert char at x pos
+	//buffer[y]=buffer[y].substr(x, linesize(y))+c+buffer[y].substr(x);
+	buffer[y]=buffer[y].substr(0, x)+c+buffer[y].substr(x);
+
+	return buffer[y];
+}
