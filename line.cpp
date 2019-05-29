@@ -32,7 +32,7 @@ std::string Line::insert(char c, int x) {
 	//insert char at x pos
 	str=str.substr(0, x)+c+str.substr(x);
 
-	return str;
+	return get(); //return the parsed version
 }
 
 int Line::decode(int a) {
