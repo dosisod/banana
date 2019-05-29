@@ -56,7 +56,8 @@ void Screen::listen() {
 		int tmpx=currx;
 
 		setxy(0, curry);
-		write(file->insert(c, tmpx, curry));
+		file->insert(c, tmpx, curry);
+		write(file->line(curry));
 		setxy(tmpx+1, curry);
 	}
 }
