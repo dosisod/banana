@@ -6,6 +6,7 @@
 Screen::Screen() {
 	setlocale(LC_ALL, ""); //allow for unicode
 	window=initscr(); //init and clear screen
+	start_color();
 	keypad(window, true); //allows arrow keys to be detected
 	noecho(); //dont print characters to screen
 	refresh();
@@ -52,11 +53,10 @@ void Screen::listen() {
 	else if (c==KEY_HOME) {
 		setxy(0, curry);
 	}
-	else if (c!=KEY_BACKSPACE) {
+	else if (c!=KEY_BACKSPACE&&c!='\n') {
 		int tmpx=currx;
 
 		setxy(0, curry);
-		//write(file->line(curry));
 		write(file->insert(c, tmpx, curry));
 		setxy(tmpx+1, curry);
 	}
@@ -84,7 +84,7 @@ void Screen::setxy(int x, int y) {
 
 	currx=x; //update current position
 	curry=y; //
-	wmove(window, y, x+ruler+3);
+	wmove(window, y, x+ruler+1);
 }
 
 void Screen::delta(int dx, int dy) {
@@ -92,11 +92,18 @@ void Screen::delta(int dx, int dy) {
 }
 
 void Screen::render() {
+	init_pair(1, COLOR_BLACK, COLOR_YELLOW);
+	init_pair(2, COLOR_WHITE, COLOR_BLACK);
+
 	for (int i=0;i<file->lines();i++) {
+		attron(COLOR_PAIR(1)); //switch to black on yellow
 		write(
 			std::string(ruler-(int)(std::log10(i+1)+1), ' ')+ //calculate left spacing
-			std::to_string(i+1)+" "+ //print line number
-			"│ "+
+			std::to_string(i+1)+" " //print line number
+		);
+
+		attron(COLOR_PAIR(2)); //switch to white on black
+		write(
 			file->line(i)+ //display line buffer
 			"\n"
 		);
