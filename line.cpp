@@ -4,36 +4,31 @@
 
 Line::Line(std::string s) {
 	str=s;
-	tabs=0;
-
-	for (int i=0;i<(int)s.length();i++) {
-		if (s[i]=='\t') tabs++;
-	}
 }
 
 std::string Line::get() {
 	std::string ret="";
-
 	int counter=0;
+
 	for (int i=0;i<(int)str.length();i++) {
 		if (str[i]=='\t') {
 			int tmp;
-			if (tabsize-(counter%4)==0) tmp=tabsize-1;
-			else tmp=tabsize-(counter%4);
+			if (counter%4==0) tmp=tabsize; //if tab is filled add a full new tab
+			else tmp=tabsize-((counter)%4); //calculate space for remaining tab
 
-			counter+=tmp;
-			ret+=std::string(tmp, ' ');
+			counter+=tmp-1;
+			ret+=std::string(tmp, ' '); //add spacing to return
 		}
-		else {
-			ret+=str[i];
-		}
-		counter++;
+		else ret+=str[i]; //single character, add to return
+
+		counter++; //all chars take up at least one space
 	}
 	return ret;
 }
 
 std::string Line::insert(char c, int x) {
 	x=decode(x);
+
 	//insert char at x pos
 	str=str.substr(0, x)+c+str.substr(x);
 
@@ -41,18 +36,20 @@ std::string Line::insert(char c, int x) {
 }
 
 int Line::decode(int a) {
-	a++;
 	int counter=0; //number of characters needed to display (eg tabs)
-	int i=0;
 
-	for (;i<=(int)str.length();i++) {
-		if (str[i]=='\t') {
-			counter+=tabsize-1;
+	int i=0;
+	for (;i<(int)str.length();i++) {
+		if (str[i]=='\t') { //calculate how much space the tab takes up
+			int tmp;
+			if (counter%4==0) tmp=tabsize;
+			else tmp=tabsize-((counter)%4);
+
+			counter+=tmp-1;
 		}
+		if (counter>=a) return i; //keep counting untill the correct character is found
+
 		counter++;
-		if (counter>=a) {
-			return i;
-		}
 	}
 	return i;
 }
