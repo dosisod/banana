@@ -53,7 +53,12 @@ void Screen::listen() {
 	else if (c==KEY_HOME) {
 		setxy(0, curry);
 	}
-	else if (c!=KEY_BACKSPACE&&c!='\n') {
+	else if (c=='\n'||c==KEY_ENTER) {
+		file->newline(currx, curry);
+		render();
+		setxy(0, curry+1);
+	}
+	else if (c!=KEY_BACKSPACE) {
 		int tmpx=currx;
 
 		setxy(0, curry);
@@ -92,6 +97,8 @@ void Screen::delta(int dx, int dy) {
 }
 
 void Screen::render() {
+	wmove(window, 0, 0); //force go to home
+
 	init_pair(1, COLOR_BLACK, COLOR_YELLOW);
 	init_pair(2, COLOR_WHITE, COLOR_BLACK);
 

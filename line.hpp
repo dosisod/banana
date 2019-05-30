@@ -1,3 +1,6 @@
+#ifndef __LINE_HPP__
+#define __LINE_HPP__
+
 #include <string>
 
 class Line {
@@ -16,3 +19,5 @@ private:
 
 	int tabsize=4; //size of each tab
 };
+
+#endif

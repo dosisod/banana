@@ -3,6 +3,7 @@
 #include <string>
 
 #include "file.hpp"
+#include "line.hpp"
 
 File::File(std::string fn) {
 	filename=fn;
@@ -32,4 +33,15 @@ int File::linesize(int n) {
 std::string File::insert(char c, int x, int y) {
 	//insert char at x pos then return it
 	return buffer[y]->insert(c, x);
+}
+
+void File::newline(int x, int y) {
+	//used to insert a new line buffer
+	std::vector<Line*>::iterator it=buffer.begin();
+
+	//add new line
+	buffer.insert(it+y+1, new Line(buffer[y]->get().substr(x)));
+
+	//set the line that was split to the new parsed line
+	buffer[y]=new Line(buffer[y]->get().substr(0,x));
 }

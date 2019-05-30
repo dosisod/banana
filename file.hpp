@@ -15,6 +15,8 @@ public:
 	//insert char c at line y, over x places, return modified line
 	std::string insert(char c, int x, int y);
 
+	void newline(int x, int y); //insert newline at given xy
+
 private:
 	std::string filename;
 
