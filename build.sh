@@ -1,0 +1,1 @@
+g++ banana.cpp file.cpp screen.cpp line.cpp -lncursesw -o banana && ./banana $@
