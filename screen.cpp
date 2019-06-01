@@ -24,7 +24,7 @@ Screen::~Screen() {
 }
 
 void Screen::write(std::string s) {
-	printw(s.c_str());
+	addstr(s.c_str());
 }
 
 void Screen::pause() {
