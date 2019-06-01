@@ -1,3 +1,6 @@
+#ifndef __SCREEN_HPP__
+#define __SCREEN_HPP__
+
 #include <ncurses.h>
 #include <string>
 
@@ -34,3 +37,5 @@ private:
 	File* file; //needed for proper spacing
 	int ruler; //defined from file
 };
+
+#endif

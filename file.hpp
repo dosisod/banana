@@ -1,3 +1,6 @@
+#ifndef __FILE_HPP__
+#define __FILE_HPP__
+
 #include <fstream>
 #include <string>
 #include <vector>
@@ -25,3 +28,5 @@ private:
 
 	int tabsize=4; //tabs are rendered as N spaces, and but will still be tabs after saving
 };
+
+#endif
