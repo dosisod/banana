@@ -16,7 +16,7 @@ public:
 	int linesize(int n); //get length of line N
 
 	//insert char c at line y, over x places, return modified line
-	std::string insert(char c, int x, int y);
+	std::string insert(int c, int x, int y);
 
 	void newline(int x, int y); //insert newline at given xy
 

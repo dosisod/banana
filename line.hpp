@@ -8,7 +8,7 @@ public:
 	//creates a new line object from string
 	Line(std::string str);
 
-	std::string insert(char c, int x);
+	std::string insert(int c, int x);
 
 	std::string get(); //gets tab-parsed string
 

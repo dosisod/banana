@@ -1,3 +1,4 @@
+#include <ncurses.h>
 #include <string>
 
 #include "line.hpp"
@@ -26,11 +27,11 @@ std::string Line::get() {
 	return ret;
 }
 
-std::string Line::insert(char c, int x) {
+std::string Line::insert(int c, int x) {
 	x=decode(x);
 
 	//insert char at x pos
-	str=str.substr(0, x)+c+str.substr(x);
+	str=str.substr(0, x)+(char)c+str.substr(x);
 
 	return get(); //return the parsed version
 }
