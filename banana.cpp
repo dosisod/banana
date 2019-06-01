@@ -19,7 +19,8 @@ int main (int argc, char *argv[]) {
 	screen.home();
 
 	do {
-		screen.listen();
+		screen.parseKey(getch());
+		screen.render();
 	} while (true);
 
 	screen.pause();

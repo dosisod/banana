@@ -30,9 +30,8 @@ void Screen::pause() {
 	getch();
 }
 
-void Screen::listen() {
-	int c=getch();
-
+//void Screen::listen() {
+void Screen::parseKey(int c) {
 	if (c==KEY_UP) {
 		delta(0, -1);
 	}
@@ -67,7 +66,6 @@ void Screen::listen() {
 		if (c==KEY_BACKSPACE) setxy(tmpx-1, curry);
 		else setxy(tmpx+1, curry);
 	}
-	render();
 }
 
 void Screen::home() {
@@ -121,7 +119,7 @@ void Screen::render() {
 			"\n"
 		);
 	}
-	setxy(tmpx, tmpy);
+	setxy(tmpx, tmpy); //move back to where the cursor was before
 }
 
 void Screen::useBuffer(File* f) {

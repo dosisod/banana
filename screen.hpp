@@ -13,7 +13,8 @@ public:
 
 	void pause();
 
-	void listen(); //listens and updates screen
+	//void listen(); //listens and updates screen
+	void parseKey(int c); //parses and interprets key
 
 	void write(std::string s);
 
