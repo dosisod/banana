@@ -58,13 +58,16 @@ void Screen::listen() {
 		render();
 		setxy(0, curry+1);
 	}
-	else if (c!=KEY_BACKSPACE) {
+	else {
 		int tmpx=currx;
 
 		setxy(0, curry);
 		write(file->insert(c, tmpx, curry));
-		setxy(tmpx+1, curry);
+
+		if (c==KEY_BACKSPACE) setxy(tmpx-1, curry);
+		else setxy(tmpx+1, curry);
 	}
+	render();
 }
 
 void Screen::home() {
@@ -97,6 +100,9 @@ void Screen::delta(int dx, int dy) {
 }
 
 void Screen::render() {
+	int tmpx=currx;
+	int tmpy=curry;
+
 	wmove(window, 0, 0); //force go to home
 
 	init_pair(1, COLOR_BLACK, COLOR_YELLOW);
@@ -115,6 +121,7 @@ void Screen::render() {
 			"\n"
 		);
 	}
+	setxy(tmpx, tmpy);
 }
 
 void Screen::useBuffer(File* f) {

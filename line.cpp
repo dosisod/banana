@@ -30,8 +30,11 @@ std::string Line::get() {
 std::string Line::insert(int c, int x) {
 	x=decode(x);
 
+	if (c==KEY_BACKSPACE) {
+		if (x!=0) str=str.substr(0, x-1)+str.substr(x);
+	}
 	//insert char at x pos
-	str=str.substr(0, x)+(char)c+str.substr(x);
+	else str=str.substr(0, x)+(char)c+str.substr(x);
 
 	return get(); //return the parsed version
 }
