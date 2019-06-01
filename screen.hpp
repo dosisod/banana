@@ -2,6 +2,7 @@
 #define __SCREEN_HPP__
 
 #include <ncurses.h>
+#include <vector>
 #include <string>
 
 #include "file.hpp"
@@ -13,8 +14,8 @@ public:
 
 	void pause();
 
-	//void listen(); //listens and updates screen
 	void parseKey(int c); //parses and interprets key
+	void parseKeys(std::vector<int> c); //parses and interprets an array of keys
 
 	void write(std::string s);
 

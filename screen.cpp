@@ -1,3 +1,4 @@
+#include <vector>
 #include <string>
 #include <cmath>
 
@@ -30,7 +31,6 @@ void Screen::pause() {
 	getch();
 }
 
-//void Screen::listen() {
 void Screen::parseKey(int c) {
 	if (c==KEY_UP) {
 		delta(0, -1);
@@ -65,6 +65,12 @@ void Screen::parseKey(int c) {
 
 		if (c==KEY_BACKSPACE) setxy(tmpx-1, curry);
 		else setxy(tmpx+1, curry);
+	}
+}
+
+void Screen::parseKeys(std::vector<int> c) {
+	for (auto i:c) {
+		parseKey(i);
 	}
 }
 
