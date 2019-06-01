@@ -56,6 +56,9 @@ void Screen::parseKey(int c) {
 		file->newline(currx, curry);
 		render();
 		setxy(0, curry+1);
+
+		//update ruler to account for newlines
+		ruler=std::log10(file->lines())+1;
 	}
 	else {
 		int tmpx=currx;
@@ -114,21 +117,19 @@ void Screen::render() {
 
 	for (int i=0;i<file->lines();i++) {
 		attron(COLOR_PAIR(1)); //switch to black on yellow
-		write(
-			std::string(ruler-(int)(std::log10(i+1)+1), ' ')+ //calculate left spacing
-			std::to_string(i+1)+" " //print line number
-		);
+
+		int space=ruler-(int)(std::log10(i+1)+1); //calculate left spacing
+		if (space>=0) write(std::string(space, ' '));
+
+		write(std::to_string(i+1)+" "); //print line number
 
 		attron(COLOR_PAIR(2)); //switch to white on black
-		write(
-			file->line(i)+ //display line buffer
-			"\n"
-		);
+		write(file->line(i)+"\n"); //display line buffer
 	}
 	setxy(tmpx, tmpy); //move back to where the cursor was before
 }
 
 void Screen::useBuffer(File* f) {
 	file=f;
-	ruler=std::log10(file->lines()+1)+1;
+	ruler=std::log10(file->lines())+1;
 }
