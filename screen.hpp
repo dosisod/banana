@@ -12,6 +12,8 @@ public:
 	Screen(); //create blank screen
 	~Screen(); //close everything nicely
 
+	void super(); //go into super mode (command mode)
+
 	void pause();
 
 	void parseKey(int c); //parses and interprets key
@@ -41,6 +43,8 @@ private:
 	int ruler; //defined from file
 
 	bool wordwrap=false; //whether or not to wrap text
+
+	bool isSuper=false; //whether or not super is active
 };
 
 #endif

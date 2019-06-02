@@ -8,16 +8,35 @@ Screen::Screen() {
 	setlocale(LC_ALL, ""); //allow for unicode
 	window=initscr(); //init and clear screen
 	start_color();
-	keypad(window, true); //allows arrow keys to be detected
 	noecho(); //dont print characters to screen
-	refresh();
+
+	keypad(window, true); //allows arrow keys to be detected
+	ESCDELAY=0;
 
 	update();
+	refresh();
 
 	//setup colors
 	init_pair(1, COLOR_BLACK, COLOR_YELLOW);
 	init_pair(2, COLOR_WHITE, COLOR_BLACK);
 	init_pair(3, COLOR_BLACK, COLOR_WHITE);
+}
+
+void Screen::super() {
+	isSuper=true;
+
+	render(0,1);
+
+	wmove(window, 0, 0);
+	attron(COLOR_PAIR(3));
+	write(std::string(termx, ' '));
+	wmove(window, 0, 0);
+
+	int c=getch();
+	while (c!=27&&c!=KEY_ENTER&&c!='\n') {
+		write(std::string(1, c));
+		c=getch();
+	}
 }
 
 void Screen::update() {
@@ -37,7 +56,10 @@ void Screen::pause() {
 }
 
 void Screen::parseKey(int c) {
-	if (c==KEY_UP) {
+	if (c==27) {
+		super();
+	}
+	else if (c==KEY_UP) {
 		delta(0, -1);
 	}
 	else if (c==KEY_DOWN) {
@@ -124,7 +146,7 @@ void Screen::render(int fy, int ty) {
 	int tmpx=currx;
 	int tmpy=curry;
 
-	wmove(window, 0, ty); //force go to home
+	wmove(window, ty, 0); //force go to home
 
 	int lines=file->lines()-fy; //dont want to call this every time
 
