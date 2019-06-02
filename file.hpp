@@ -19,6 +19,7 @@ public:
 	std::string insert(int c, int x, int y);
 
 	void newline(int x, int y); //insert newline at given xy
+	void delline(int y); //delete line if backspace is hit at start of line
 
 private:
 	std::string filename;

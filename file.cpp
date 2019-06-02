@@ -45,3 +45,10 @@ void File::newline(int x, int y) {
 	//set the line that was split to the new parsed line
 	buffer[y]=new Line(buffer[y]->get().substr(0,x));
 }
+
+void File::delline(int y) {
+	 buffer[y-1]=new Line(buffer[y-1]->get()+buffer[y]->get());
+
+	 //remove line that cursor was
+	 buffer.erase(buffer.begin()+y);
+}
