@@ -61,8 +61,9 @@ void Screen::parseKey(int c) {
 	}
 	else if (c==KEY_BACKSPACE&&currx==0&&curry!=0) {
 		file->delline(curry);
-
 		setxy(file->linesize(curry-1), curry-1);
+
+		ruler=std::log10(file->lines())+1;
 	}
 	else {
 		int tmpx=currx;
@@ -131,7 +132,10 @@ void Screen::render() {
 			write(std::to_string(i+1)+" "); //print line number
 
 			attron(COLOR_PAIR(2)); //switch to white on black
-			write(file->line(i)+"\n"); //display line buffer
+
+			//display line buffer
+			if (wordwrap) write(file->line(i)+"\n");
+			else write(file->line(i).substr(0, termx-ruler-2)+"\n");
 		}
 		else {
 			attron(COLOR_PAIR(2));

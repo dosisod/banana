@@ -38,6 +38,8 @@ private:
 
 	File* file; //needed for proper spacing
 	int ruler; //defined from file
+
+	bool wordwrap=false; //whether or not to wrap text
 };
 
 #endif
