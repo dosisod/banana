@@ -20,6 +20,7 @@ public:
 	void write(std::string s);
 
 	void render(); //draws state of file to screen
+	void render(int fy, int ty); //render screen starting with file line y at terminal line y
 
 	void home(); //goto home position
 	void setxy(int x, int y);

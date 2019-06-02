@@ -13,6 +13,11 @@ Screen::Screen() {
 	refresh();
 
 	update();
+
+	//setup colors
+	init_pair(1, COLOR_BLACK, COLOR_YELLOW);
+	init_pair(2, COLOR_WHITE, COLOR_BLACK);
+	init_pair(3, COLOR_BLACK, COLOR_WHITE);
 }
 
 void Screen::update() {
@@ -112,15 +117,16 @@ void Screen::delta(int dx, int dy) {
 }
 
 void Screen::render() {
+	render(0, 0);
+}
+
+void Screen::render(int fy, int ty) {
 	int tmpx=currx;
 	int tmpy=curry;
 
-	wmove(window, 0, 0); //force go to home
+	wmove(window, 0, ty); //force go to home
 
-	init_pair(1, COLOR_BLACK, COLOR_YELLOW);
-	init_pair(2, COLOR_WHITE, COLOR_BLACK);
-
-	int lines=file->lines(); //dont want to call this every time
+	int lines=file->lines()-fy; //dont want to call this every time
 
 	for (int i=0;i<termy;i++) { //must go through all lines to fully clear screen
 		if (i<lines) {
@@ -134,8 +140,8 @@ void Screen::render() {
 			attron(COLOR_PAIR(2)); //switch to white on black
 
 			//display line buffer
-			if (wordwrap) write(file->line(i)+"\n");
-			else write(file->line(i).substr(0, termx-ruler-2)+"\n");
+			if (wordwrap) write(file->line(i+fy)+"\n");
+			else write(file->line(i+fy).substr(0, termx-ruler-2)+"\n");
 		}
 		else {
 			attron(COLOR_PAIR(2));
