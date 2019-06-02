@@ -23,7 +23,7 @@ public:
 
 	void home(); //goto home position
 	void setxy(int x, int y);
-	void delta(int dx, int dy); //move cursor relative to currnt pos
+	void delta(int dx, int dy); //move cursor relative to current pos
 
 	void useBuffer(File* f); //switch which buffer to use
 

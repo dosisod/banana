@@ -47,8 +47,8 @@ void File::newline(int x, int y) {
 }
 
 void File::delline(int y) {
-	 buffer[y-1]=new Line(buffer[y-1]->get()+buffer[y]->get());
+	buffer[y-1]=new Line(buffer[y-1]->get()+buffer[y]->get());
 
-	 //remove line that cursor was
-	 buffer.erase(buffer.begin()+y);
+	//remove line that cursor was
+	buffer.erase(buffer.begin()+y);
 }
