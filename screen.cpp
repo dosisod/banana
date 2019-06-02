@@ -54,11 +54,15 @@ void Screen::parseKey(int c) {
 	}
 	else if (c=='\n'||c==KEY_ENTER) {
 		file->newline(currx, curry);
-		render();
 		setxy(0, curry+1);
 
 		//update ruler to account for newlines
 		ruler=std::log10(file->lines())+1;
+	}
+	else if (c==KEY_BACKSPACE&&currx==0&&curry!=0) {
+		file->delline(curry);
+
+		setxy(file->linesize(curry-1), curry-1);
 	}
 	else {
 		int tmpx=currx;
@@ -115,16 +119,24 @@ void Screen::render() {
 	init_pair(1, COLOR_BLACK, COLOR_YELLOW);
 	init_pair(2, COLOR_WHITE, COLOR_BLACK);
 
-	for (int i=0;i<file->lines();i++) {
-		attron(COLOR_PAIR(1)); //switch to black on yellow
+	int lines=file->lines(); //dont want to call this every time
 
-		int space=ruler-(int)(std::log10(i+1)+1); //calculate left spacing
-		if (space>=0) write(std::string(space, ' '));
+	for (int i=0;i<termy;i++) { //must go through all lines to fully clear screen
+		if (i<lines) {
+			attron(COLOR_PAIR(1)); //switch to black on yellow
 
-		write(std::to_string(i+1)+" "); //print line number
+			int space=ruler-(int)(std::log10(i+1)+1); //calculate left spacing
+			if (space>=0) write(std::string(space, ' '));
 
-		attron(COLOR_PAIR(2)); //switch to white on black
-		write(file->line(i)+"\n"); //display line buffer
+			write(std::to_string(i+1)+" "); //print line number
+
+			attron(COLOR_PAIR(2)); //switch to white on black
+			write(file->line(i)+"\n"); //display line buffer
+		}
+		else {
+			attron(COLOR_PAIR(2));
+			write("\n"); //put something to make sure line clears
+		}
 	}
 	setxy(tmpx, tmpy); //move back to where the cursor was before
 }
