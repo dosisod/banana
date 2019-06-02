@@ -7,9 +7,9 @@ Banana: Slim terminal text-editor
 #compile using
 g++ banana.cpp file.cpp screen.cpp line.cpp -lncursesw -o banana
 
-#to compile then run edit FILE, do
-./build.sh FILE
-
 #after compiling, run with
 ./banana FILE
+
+#to compile open at the same time, do
+./build.sh FILE
 ```
