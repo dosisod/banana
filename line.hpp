@@ -17,7 +17,7 @@ private:
 
 	int decode(int x); //find where the cursor really is in the string
 
-	int tabsize=4; //size of each tab
+	int tabsize=4; //tabs are rendered as N spaces, and but will still be tabs after saving
 };
 
 #endif

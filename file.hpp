@@ -26,8 +26,6 @@ private:
 
 	std::fstream stream; //stream is here as it can be used when reading and writing
 	std::vector<Line*> buffer; //contains the lines of the file
-
-	int tabsize=4; //tabs are rendered as N spaces, and but will still be tabs after saving
 };
 
 #endif
