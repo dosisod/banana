@@ -84,7 +84,7 @@ void Screen::parseKey(int c) {
 		}
 		else {
 			//left was pressed while at the start of a line
-			if (currx==0&&curry>0) setxy(file->line(curry-1).length(), curry-1);
+			if (currx==0&&curry>0) setxy(file->linesize(curry-1), curry-1);
 
 			//left was pressed somewhere else
 			else delta(-1, 0);
@@ -93,19 +93,19 @@ void Screen::parseKey(int c) {
 	else if (c==KEY_RIGHT) {
 		if (isSuper) {
 			//right was press while in super mode
-			if (superx<(int)superLine->get().length()) superx++;
+			if (superx<superLine->size()) superx++;
 		}
 		else {
 			//right was pressed at the end of a line
-			if (currx==(int)file->line(curry).length()&&curry<file->lines()) setxy(0, curry+1);
+			if (currx==(int)file->linesize(curry)&&curry<file->lines()) setxy(0, curry+1);
 
 			//right was pressed somewhere else
 			else delta(1, 0);
 		}
 	}
 	else if (c==KEY_END) {
-		if (isSuper) superx=superLine->get().length();
-		else setxy(file->line(curry).length(), curry);
+		if (isSuper) superx=superLine->size();
+		else setxy(file->linesize(curry), curry);
 	}
 	else if (c==KEY_HOME) {
 		if (isSuper) superx=0;
@@ -160,8 +160,8 @@ void Screen::setxy(int x, int y) {
 	if (y<0||y>=file->lines()) return;
 
 	//prevents cursor getting stuck when going to a shorter line
-	if (x>((int)file->line(y).length())) {
-		x=file->line(y).length();
+	if (x>(file->linesize(y))) {
+		x=file->linesize(y);
 	}
 
 	//make sure cursor stays within bounds

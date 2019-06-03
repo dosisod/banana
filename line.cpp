@@ -27,6 +27,14 @@ std::string Line::get() {
 	return ret;
 }
 
+std::string Line::getRaw() {
+	return str;
+}
+
+int Line::size() {
+	return get().length();
+}
+
 std::string Line::insert(int c, int x) {
 	x=decode(x);
 

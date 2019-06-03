@@ -11,6 +11,9 @@ public:
 	std::string insert(int c, int x);
 
 	std::string get(); //gets tab-parsed string
+	std::string getRaw(); //returns raw string
+
+	int size(); //returns size of get()
 
 private:
 	std::string str; //string containing line data

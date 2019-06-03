@@ -30,7 +30,7 @@ std::string File::line(int n) {
 }
 
 int File::linesize(int n) {
-	return (int)line(n).length();
+	return buffer[n]->size();
 }
 
 std::string File::insert(int c, int x, int y) {
