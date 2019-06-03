@@ -39,7 +39,7 @@ private:
 	int termx, termy; //x and y dimension of terminal
 	void update(); //updates x and y
 
-	File* file; //needed for proper spacing
+	File* file; //stores the file buffer
 	int ruler; //defined from file
 
 	bool wordwrap=false; //whether or not to wrap text

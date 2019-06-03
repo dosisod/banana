@@ -24,17 +24,23 @@ Screen::Screen() {
 
 void Screen::super() {
 	isSuper=true;
+	Line superLine("");
 
-	render(0,1);
+	render(0,1); //move all lines down one
 
 	wmove(window, 0, 0);
 	attron(COLOR_PAIR(3));
-	write(std::string(termx, ' '));
+	write(std::string(termx, ' ')); //fill line with white space
 	wmove(window, 0, 0);
 
 	int c=getch();
 	while (c!=27&&c!=KEY_ENTER&&c!='\n') {
-		write(std::string(1, c));
+		wmove(window, 0, 0);
+		attron(COLOR_PAIR(3));
+		write(std::string(termx, ' ')); //fill line with white space
+		wmove(window, 0, 0);
+
+		write(superLine.insert(c, superLine.get().length()));
 		c=getch();
 	}
 }
