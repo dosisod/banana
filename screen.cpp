@@ -24,7 +24,10 @@ Screen::Screen() {
 
 void Screen::super() {
 	isSuper=true;
-	Line superLine("");
+
+	//clear from last time super was active
+	superx=0;
+	superLine=new Line("");
 
 	render(0,1); //move all lines down one
 
@@ -35,14 +38,17 @@ void Screen::super() {
 
 	int c=getch();
 	while (c!=27&&c!=KEY_ENTER&&c!='\n') {
-		wmove(window, 0, 0);
-		attron(COLOR_PAIR(3));
+		wmove(window, 0, 0); //goto start of line
 		write(std::string(termx, ' ')); //fill line with white space
-		wmove(window, 0, 0);
+		wmove(window, 0, 0); //go back to start of line
 
-		write(superLine.insert(c, superLine.get().length()));
+		parseKey(c); //parse key press
+		write(superLine->get()); //write line
+		wmove(window, 0, superx); //move cursor back to correct position
+
 		c=getch();
 	}
+	isSuper=false;
 }
 
 void Screen::update() {
@@ -65,47 +71,77 @@ void Screen::parseKey(int c) {
 	if (c==27) {
 		super();
 	}
-	else if (c==KEY_UP) {
+	else if (!isSuper&&c==KEY_UP) {
 		delta(0, -1);
 	}
-	else if (c==KEY_DOWN) {
+	else if (!isSuper&&c==KEY_DOWN) {
 		delta(0, 1);
 	}
 	else if (c==KEY_LEFT) {
-		if (currx==0&&curry>0) setxy(file->line(curry-1).length(), curry-1);
-		else delta(-1, 0);
+		if (isSuper) {
+			//left was pressed while in super mode
+			if (superx!=0) superx--;
+		}
+		else {
+			//left was pressed while at the start of a line
+			if (currx==0&&curry>0) setxy(file->line(curry-1).length(), curry-1);
+
+			//left was pressed somewhere else
+			else delta(-1, 0);
+		}
 	}
 	else if (c==KEY_RIGHT) {
-		if (currx==(int)file->line(curry).length()&&curry<file->lines()) setxy(0, curry+1);
-		else delta(1, 0);
+		if (isSuper) {
+			//right was press while in super mode
+			if (superx<(int)superLine->get().length()) superx++;
+		}
+		else {
+			//right was pressed at the end of a line
+			if (currx==(int)file->line(curry).length()&&curry<file->lines()) setxy(0, curry+1);
+
+			//right was pressed somewhere else
+			else delta(1, 0);
+		}
 	}
 	else if (c==KEY_END) {
-		setxy(file->line(curry).length(), curry);
+		if (isSuper) superx=superLine->get().length();
+		else setxy(file->line(curry).length(), curry);
 	}
 	else if (c==KEY_HOME) {
-		setxy(0, curry);
+		if (isSuper) superx=0;
+		else setxy(0, curry);
 	}
-	else if (c=='\n'||c==KEY_ENTER) {
+	else if (!isSuper&&(c=='\n'||c==KEY_ENTER)) {
 		file->newline(currx, curry);
 		setxy(0, curry+1);
 
 		//update ruler to account for newlines
 		ruler=std::log10(file->lines())+1;
 	}
-	else if (c==KEY_BACKSPACE&&currx==0&&curry!=0) {
+	else if (!isSuper&&(c==KEY_BACKSPACE&&currx==0&&curry!=0)) {
 		file->delline(curry);
 		setxy(file->linesize(curry-1), curry-1);
 
 		ruler=std::log10(file->lines())+1;
 	}
 	else {
-		int tmpx=currx;
+		if (isSuper) { //only changes to superx are needed in super mode
+			//return if an invalid key was pressed
+			if (c==KEY_UP||c==KEY_DOWN) return;
 
-		setxy(0, curry);
-		write(file->insert(c, tmpx, curry));
+			superLine->insert(c, superx);
+			if (c==KEY_BACKSPACE&&superx!=0) superx--;
+			else if (c!=KEY_BACKSPACE) superx++;
+		}
+		else { //key was pressed when not in super mode
+			int tmpx=currx;
 
-		if (c==KEY_BACKSPACE) setxy(tmpx-1, curry);
-		else setxy(tmpx+1, curry);
+			setxy(0, curry);
+			write(file->insert(c, tmpx, curry));
+
+			if (c==KEY_BACKSPACE) setxy(tmpx-1, curry);
+			else setxy(tmpx+1, curry);
+		}
 	}
 }
 

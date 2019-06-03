@@ -36,6 +36,9 @@ private:
 	int currx=0;
 	int curry=0; //current xy of cursor
 
+	Line* superLine; //stores line for super mode
+	int superx=0; //x position of cursor when in super mode
+
 	int termx, termy; //x and y dimension of terminal
 	void update(); //updates x and y
 
