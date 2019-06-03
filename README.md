@@ -5,7 +5,7 @@ Banana: Slim terminal text-editor
 
 ```
 #compile using
-g++ banana.cpp file.cpp screen.cpp line.cpp -lncursesw -o banana
+g++ src/*.cpp -lncursesw -o ./banana
 
 #after compiling, run with
 ./banana FILE
