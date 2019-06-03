@@ -15,6 +15,9 @@ File::File(std::string fn) {
 			buffer.push_back(new Line(line));
 		}
 	}
+	else {
+		buffer.push_back(new Line("")); //append a single blank file
+	}
 	stream.close();
 }
 

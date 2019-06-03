@@ -5,15 +5,22 @@
 int main (int argc, char *argv[]) {
 	Screen screen;
 
-	if (argc!=2) {
-		screen.write("banana takes exactly 1 parameter (for now)\n");
+	if (argc==1) {
+		screen.useBuffer(
+			new File { "" }
+		);
+	}
+	else if (argc==2) {
+		screen.useBuffer(
+			new File { std::string(argv[1]) }
+		);
+	}
+	else {
+		screen.write("banana takes exactly 1 or 0 parameters (for now)\n");
 		screen.pause();
 
-		return -1;
+		return 1;
 	}
-
-	File f { std::string(argv[1]) }; //read file into file buffer
-	screen.useBuffer(&f); //set screen to use the file
 
 	screen.render();
 	screen.home();
