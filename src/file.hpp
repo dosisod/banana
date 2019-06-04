@@ -21,6 +21,9 @@ public:
 	void newline(int x, int y); //insert newline at given xy
 	void delline(int y); //delete line if backspace is hit at start of line
 
+	void save();
+	void saveas(std::string fn);
+
 private:
 	std::string filename;
 

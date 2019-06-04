@@ -55,3 +55,17 @@ void File::delline(int y) {
 	//remove line that cursor was
 	buffer.erase(buffer.begin()+y);
 }
+
+void File::save() {
+	saveas(filename);
+}
+
+void File::saveas(std::string fn) {
+	stream.open(fn, std::ios::out);
+
+	for (auto i:buffer) {
+		stream << i->getRaw() << "\n";
+	}
+
+	stream.close();
+}
