@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 
+#include "commander.hpp"
 #include "file.hpp"
 
 class Screen {
@@ -48,6 +49,8 @@ private:
 	bool wordwrap=false; //whether or not to wrap text
 
 	bool isSuper=false; //whether or not super is active
+
+	Commander* commands; //pointer for storing the commander
 };
 
 #endif

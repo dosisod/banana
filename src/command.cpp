@@ -6,11 +6,11 @@ Command::Command(std::string c, std::function<void(std::string)> f) {
 	int last=0;
 	std::string tmp="";
 
-	for (int i=0;i<=(int)c.length();i++) {
+	for (int i=1;i<=(int)c.length();i++) {
 		if (c[i]==' '||i==(int)c.length()) { //split if at a space or eol
-			tmp=c.substr(last, i);
+			tmp=c.substr(last, i-last);
 			if (tmp!="") calls.push_back(tmp);
-			last=i;
+			last=i+1;
 		}
 	}
 

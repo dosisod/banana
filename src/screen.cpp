@@ -2,6 +2,8 @@
 #include <string>
 #include <cmath>
 
+#include "commander.hpp"
+#include "command.hpp"
 #include "screen.hpp"
 
 Screen::Screen() {
@@ -20,6 +22,10 @@ Screen::Screen() {
 	init_pair(1, COLOR_BLACK, COLOR_YELLOW);
 	init_pair(2, COLOR_WHITE, COLOR_BLACK);
 	init_pair(3, COLOR_BLACK, COLOR_WHITE);
+
+	commands=new Commander(std::vector<Command*>({
+		new Command("save s", [=](std::string s){ file->save(); } )
+	}));
 }
 
 void Screen::super() {
@@ -48,6 +54,8 @@ void Screen::super() {
 
 		c=getch();
 	}
+	if (c=='\n'||c==KEY_ENTER) commands->parse(superLine->getRaw());
+
 	isSuper=false;
 }
 

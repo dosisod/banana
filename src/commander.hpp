@@ -1,6 +1,9 @@
+#ifndef __COMMANDER_HPP__
+#define __COMMANDER_HPP__
+
 #include "command.hpp"
 
-class Commander { //holds al of the commands to be used
+class Commander { //holds all of the commands to be used
 public:
 	Commander(std::vector<Command*> c);
 
@@ -9,3 +12,5 @@ public:
 private:
 	std::vector<Command*> commands;
 };
+
+#endif
