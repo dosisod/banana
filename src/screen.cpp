@@ -24,7 +24,8 @@ Screen::Screen() {
 	init_pair(3, COLOR_BLACK, COLOR_WHITE);
 
 	commands=new Commander(std::vector<Command*>({
-		new Command("save s", [=](std::string s){ file->save(); } )
+		new Command("save s", [=](std::string s){ file->save(); } ),
+		new Command("saveas sa", [=](std::string s){ file->saveas(s); } )
 	}));
 }
 
