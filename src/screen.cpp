@@ -5,6 +5,7 @@
 #include "commander.hpp"
 #include "command.hpp"
 #include "screen.hpp"
+#include "keys.hpp"
 
 Screen::Screen() {
 	setlocale(LC_ALL, ""); //allow for unicode
@@ -44,7 +45,7 @@ void Screen::super() {
 	wmove(window, 0, 0);
 
 	int c=getch();
-	while (c!=27&&c!=KEY_ENTER&&c!='\n') {
+	while (!key::escape(c)&&!key::enter(c)) {
 		wmove(window, 0, 0); //goto start of line
 		write(std::string(termx, ' ')); //fill line with white space
 		wmove(window, 0, 0); //go back to start of line
@@ -55,7 +56,7 @@ void Screen::super() {
 
 		c=getch();
 	}
-	if (c=='\n'||c==KEY_ENTER) commands->parse(superLine->getRaw());
+	if (key::enter(c)) commands->parse(superLine->getRaw());
 
 	isSuper=false;
 }
@@ -77,16 +78,16 @@ void Screen::pause() {
 }
 
 void Screen::parseKey(int c) {
-	if (c==27) {
+	if (key::escape(c)) {
 		super();
 	}
-	else if (!isSuper&&c==KEY_UP) {
+	else if (!isSuper&&key::up(c)) {
 		delta(0, -1);
 	}
-	else if (!isSuper&&c==KEY_DOWN) {
+	else if (!isSuper&&key::down(c)) {
 		delta(0, 1);
 	}
-	else if (c==KEY_LEFT) {
+	else if (key::left(c)) {
 		if (isSuper) {
 			//left was pressed while in super mode
 			if (superx!=0) superx--;
@@ -99,7 +100,7 @@ void Screen::parseKey(int c) {
 			else delta(-1, 0);
 		}
 	}
-	else if (c==KEY_RIGHT) {
+	else if (key::right(c)) {
 		if (isSuper) {
 			//right was press while in super mode
 			if (superx<superLine->size()) superx++;
@@ -112,22 +113,22 @@ void Screen::parseKey(int c) {
 			else delta(1, 0);
 		}
 	}
-	else if (c==KEY_END) {
+	else if (key::end(c)) {
 		if (isSuper) superx=superLine->size();
 		else setxy(file->linesize(curry), curry);
 	}
-	else if (c==KEY_HOME) {
+	else if (key::home(c)) {
 		if (isSuper) superx=0;
 		else setxy(0, curry);
 	}
-	else if (!isSuper&&(c=='\n'||c==KEY_ENTER)) {
+	else if (!isSuper&&key::enter(c)) {
 		file->newline(currx, curry);
 		setxy(0, curry+1);
 
 		//update ruler to account for newlines
 		ruler=std::log10(file->lines())+1;
 	}
-	else if (!isSuper&&(c==KEY_BACKSPACE&&currx==0&&curry!=0)) {
+	else if (!isSuper&&key::backspace(c)&&currx==0&&curry!=0) {
 		file->delline(curry);
 		setxy(file->linesize(curry-1), curry-1);
 
@@ -136,11 +137,11 @@ void Screen::parseKey(int c) {
 	else {
 		if (isSuper) { //only changes to superx are needed in super mode
 			//return if an invalid key was pressed
-			if (c==KEY_UP||c==KEY_DOWN) return;
+			if (key::down(c)||key::up(c)) return;
 
 			superLine->insert(c, superx);
-			if (c==KEY_BACKSPACE&&superx!=0) superx--;
-			else if (c!=KEY_BACKSPACE) superx++;
+			if (key::backspace(c)&&superx!=0) superx--;
+			else if (!key::backspace(c)) superx++;
 		}
 		else { //key was pressed when not in super mode
 			int tmpx=currx;
@@ -148,7 +149,7 @@ void Screen::parseKey(int c) {
 			setxy(0, curry);
 			write(file->insert(c, tmpx, curry));
 
-			if (c==KEY_BACKSPACE) setxy(tmpx-1, curry);
+			if (key::backspace(c)) setxy(tmpx-1, curry);
 			else setxy(tmpx+1, curry);
 		}
 	}
