@@ -2,6 +2,7 @@
 #include <string>
 
 #include "line.hpp"
+#include "keys.hpp"
 
 Line::Line(std::string s) {
 	str=s;
@@ -38,7 +39,7 @@ int Line::size() {
 std::string Line::insert(int c, int x) {
 	x=decode(x);
 
-	if (c==KEY_BACKSPACE) {
+	if (key::backspace(c)) {
 		if (x!=0) str=str.substr(0, x-1)+str.substr(x);
 	}
 	//insert char at x pos
