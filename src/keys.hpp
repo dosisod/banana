@@ -7,6 +7,7 @@
 namespace key {
 	bool enter(int c);
 	bool backspace(int c);
+	bool del(int c); //delete is a keyword
 	bool home(int c);
 	bool end(int c);
 	bool up(int c);
