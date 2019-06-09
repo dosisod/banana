@@ -26,7 +26,11 @@ Screen::Screen() {
 
 	commands=new Commander(std::vector<Command*>({
 		new Command("save s", [=](std::string s){ file->save(); } ),
-		new Command("saveas sa", [=](std::string s){ file->saveas(s); } )
+		new Command("saveas sa", [=](std::string s){ file->saveas(s); } ),
+		new Command("quit exit q", [=](std::string s) {
+			this->~Screen(); //calls deconstructor then quits
+			exit(0);
+		})
 	}));
 }
 
