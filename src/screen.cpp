@@ -78,6 +78,19 @@ void Screen::pause() {
 }
 
 void Screen::parseKey(int c) {
+	if (key::del(c)) { //convert delete into a backspace
+		currx++; //move over as if it was a backspace
+
+		if (currx>file->linesize(curry)) {
+			if (file->lines()>1) {
+				setxy(0, curry+1);
+			}
+			else return;
+		}
+		parseKey(KEY_BACKSPACE);
+		return;
+	}
+
 	if (key::escape(c)) {
 		super();
 	}
