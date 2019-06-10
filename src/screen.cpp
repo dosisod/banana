@@ -145,9 +145,13 @@ void Screen::parseKey(int c) {
 		//update ruler to account for newlines
 		ruler=std::log10(file->lines())+1;
 	}
+	//backspace is pressed at the start of a line
 	else if (!isSuper&&key::backspace(c)&&currx==0&&curry!=0) {
+		int tempx=file->linesize(curry-1);
+
 		file->delline(curry);
-		setxy(file->linesize(curry-1), curry-1);
+		//setxy(file->linesize(curry-1), curry-1);
+		setxy(tempx, curry-1);
 
 		ruler=std::log10(file->lines())+1;
 	}
