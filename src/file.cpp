@@ -12,11 +12,11 @@ File::File(std::string fn) {
 	if (stream.is_open()) {
 		std::string line="";
 		while (std::getline(stream, line)) {
-			buffer.push_back(new Line(line));
+			buffer.push_back(std::make_shared<Line>(line));
 		}
 	}
 	else {
-		buffer.push_back(new Line("")); //append a single blank file
+		buffer.push_back(std::make_shared<Line>("")); //append a single blank file
 	}
 	stream.close();
 }
@@ -40,17 +40,17 @@ std::string File::insert(int c, int x, int y) {
 
 void File::newline(int x, int y) {
 	//used to insert a new line buffer
-	std::vector<Line*>::iterator it=buffer.begin();
+	std::vector<std::shared_ptr<Line>>::iterator it=buffer.begin();
 
 	//add new line
-	buffer.insert(it+y+1, new Line(buffer[y]->get().substr(x)));
+	buffer.insert(it+y+1, std::make_shared<Line>(buffer[y]->get().substr(x)));
 
 	//set the line that was split to the new parsed line
-	buffer[y]=new Line(buffer[y]->get().substr(0,x));
+	buffer[y]=std::make_shared<Line>(buffer[y]->get().substr(0,x));
 }
 
 void File::delline(int y) {
-	buffer[y-1]=new Line(buffer[y-1]->get()+buffer[y]->get());
+	buffer[y-1]=std::make_shared<Line>(buffer[y-1]->get()+buffer[y]->get());
 
 	//remove line that cursor was
 	buffer.erase(buffer.begin()+y);

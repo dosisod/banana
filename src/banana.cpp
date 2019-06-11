@@ -7,12 +7,12 @@ int main (int argc, char *argv[]) {
 
 	if (argc==1) {
 		screen.useBuffer(
-			new File { "" }
+			std::make_shared<File>("")
 		);
 	}
 	else if (argc==2) {
 		screen.useBuffer(
-			new File { std::string(argv[1]) }
+			std::make_shared<File>(std::string(argv[1]))
 		);
 	}
 	else {

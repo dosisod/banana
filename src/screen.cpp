@@ -24,14 +24,22 @@ Screen::Screen() {
 	init_pair(2, COLOR_WHITE, COLOR_BLACK);
 	init_pair(3, COLOR_BLACK, COLOR_WHITE);
 
-	commands=new Commander(std::vector<Command*>({
-		new Command("save s", [=](std::string s){ file->save(); } ),
-		new Command("saveas sa", [=](std::string s){ file->saveas(s); } ),
-		new Command("quit exit q", [=](std::string s) {
-			this->~Screen(); //calls deconstructor then quits
-			exit(0);
+	commands=std::make_shared<Commander>(std::vector<std::shared_ptr<Command>>({
+		std::make_shared<Command>(
+			"save s", [=](std::string s) {
+				file->save();
+			}),
+		std::make_shared<Command>(
+			"saveas sa", [=](std::string s) {
+				file->saveas(s);
+			}),
+		std::make_shared<Command>(
+			"quit exit q", [=](std::string s) {
+				this->~Screen(); //calls deconstructor then quits
+				exit(0);
+			})
 		})
-	}));
+	);
 }
 
 void Screen::super() {
@@ -39,7 +47,7 @@ void Screen::super() {
 
 	//clear from last time super was active
 	superx=0;
-	superLine=new Line("");
+	superLine=std::make_shared<Line>("");
 
 	render(0,1); //move all lines down one
 
@@ -150,7 +158,6 @@ void Screen::parseKey(int c) {
 		int tempx=file->linesize(curry-1);
 
 		file->delline(curry);
-		//setxy(file->linesize(curry-1), curry-1);
 		setxy(tempx, curry-1);
 
 		ruler=std::log10(file->lines())+1;
@@ -246,7 +253,7 @@ void Screen::render(int fy, int ty) {
 	setxy(tmpx, tmpy); //move back to where the cursor was before
 }
 
-void Screen::useBuffer(File* f) {
+void Screen::useBuffer(std::shared_ptr<File> f) {
 	file=f;
 	ruler=std::log10(file->lines())+1;
 }

@@ -29,7 +29,7 @@ public:
 	void setxy(int x, int y);
 	void delta(int dx, int dy); //move cursor relative to current pos
 
-	void useBuffer(File* f); //switch which buffer to use
+	void useBuffer(std::shared_ptr<File> f); //switch which buffer to use
 
 private:
 	WINDOW* window;
@@ -37,20 +37,20 @@ private:
 	int currx=0;
 	int curry=0; //current xy of cursor
 
-	Line* superLine; //stores line for super mode
+	std::shared_ptr<Line> superLine; //stores line for super mode
 	int superx=0; //x position of cursor when in super mode
 
 	int termx, termy; //x and y dimension of terminal
 	void update(); //updates x and y
 
-	File* file; //stores the file buffer
+	std::shared_ptr<File> file; //stores the file buffer
 	int ruler; //defined from file
 
 	bool wordwrap=false; //whether or not to wrap text
 
 	bool isSuper=false; //whether or not super is active
 
-	Commander* commands; //pointer for storing the commander
+	std::shared_ptr<Commander> commands; //pointer for storing the commander
 };
 
 #endif

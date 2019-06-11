@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "line.hpp"
 
@@ -28,7 +29,7 @@ private:
 	std::string filename;
 
 	std::fstream stream; //stream is here as it can be used when reading and writing
-	std::vector<Line*> buffer; //contains the lines of the file
+	std::vector<std::shared_ptr<Line>> buffer; //contains the lines of the file
 };
 
 #endif

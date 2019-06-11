@@ -1,6 +1,6 @@
 #include "commander.hpp"
 
-Commander::Commander(std::vector<Command*> c) {
+Commander::Commander(std::vector<std::shared_ptr<Command>> c) {
 	commands=c;
 }
 
