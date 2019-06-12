@@ -37,6 +37,18 @@ Screen::Screen() {
 			"quit exit q", [=](std::string s) {
 				this->~Screen(); //calls deconstructor then quits
 				exit(0);
+			}),
+		std::make_shared<Command>( //save under same name then exit
+			"quitsave exitsave qs", [=](std::string s) {
+				file->save();
+				this->~Screen();
+				exit(0);
+			}),
+		std::make_shared<Command>( //save under different name then exit
+			"quitas exitas qa", [=](std::string s) {
+				file->saveas(s);
+				this->~Screen();
+				exit(0);
 			})
 		})
 	);
