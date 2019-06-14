@@ -61,6 +61,8 @@ void File::save() {
 }
 
 void File::saveas(std::string fn) {
+	filename=fn; //saveas also sets the filename for files saved with "save" later on
+
 	stream.open(fn, std::ios::out);
 
 	for (auto i:buffer) {
