@@ -1,15 +1,17 @@
 # banana
-Banana: Slim terminal text-editor
 
-# Installing
+banana: Slim terminal text-editor
 
-```
-#compile using
-g++ src/*.cpp -lncursesw -o ./banana
+## Installing
 
-#after compiling, run with
-./banana FILE
+Compile using:
 
-#to compile open at the same time, do
-./build.sh FILE
-```
+`g++ src/*.cpp -lncursesw -o ./banana`
+
+After compiling, run with:
+
+`./banana FILE`
+
+To compile and open at the same time, do:
+
+`./build.sh FILE`
