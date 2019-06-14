@@ -218,7 +218,7 @@ void Screen::setxy(int x, int y) {
 	if (
 		x<0||
 		x>=(termx-ruler-3)||
-		y>termy
+		y>=termy
 	) return;
 
 	currx=x; //update current position
