@@ -71,3 +71,7 @@ void File::saveas(std::string fn) {
 
 	stream.close();
 }
+
+std::string File::getfn() {
+	return filename;
+}

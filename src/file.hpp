@@ -25,6 +25,8 @@ public:
 	void save();
 	void saveas(std::string fn);
 
+	std::string getfn(); //returns filename
+
 private:
 	std::string filename;
 

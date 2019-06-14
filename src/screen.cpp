@@ -73,7 +73,16 @@ void Screen::super() {
 	write(std::string(termx, ' ')); //fill line with white space
 	wmove(window, 0, 0);
 
+	write( //print file info until a key is pressed
+		"  ["+
+		file->getfn()+
+		"]"
+	);
+	wmove(window, 0, 0);
+
 	int c=getch();
+	write(std::string(termx, ' ')); //fill line with white space
+
 	while (!key::escape(c)&&!key::enter(c)) {
 		wmove(window, 0, 0); //goto start of line
 		write(std::string(termx, ' ')); //fill line with white space
