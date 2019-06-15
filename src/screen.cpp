@@ -8,16 +8,9 @@
 
 //This file contains constructor, destructor, and super mode functions
 
-Screen::Screen() {
-	setlocale(LC_ALL, ""); //allow for unicode
-	window=initscr(); //init and clear screen
-	start_color();
-	noecho(); //dont print characters to screen
+Screen::Screen(std::shared_ptr<Terminal> t) {
+	term=t; //pass terminal set from main so it can be used
 
-	keypad(window, true); //allows arrow keys to be detected
-	ESCDELAY=0;
-
-	update();
 	refresh();
 
 	//setup colors
@@ -73,31 +66,31 @@ void Screen::super() {
 	superx=0;
 	superLine=std::make_shared<Line>("");
 
-	render(0,1); //move all lines down one
+	render(0, 1); //move all lines down one
 
-	wmove(window, 0, 0);
+	term->move(0, 0);
 	attron(COLOR_PAIR(3));
-	write(std::string(termx, ' ')); //fill line with white space
-	wmove(window, 0, 0);
+	term->write(std::string(term->getx(), ' ')); //fill line with white space
+	term->move(0, 0);
 
-	write( //print file info until a key is pressed
+	term->write( //print file info until a key is pressed
 		"  ["+
 		file->getfn()+
 		"]"
 	);
-	wmove(window, 0, 0);
+	term->move(0, 0);
 
 	int c=getch();
-	write(std::string(termx, ' ')); //fill line with white space
+	term->write(std::string(term->getx(), ' ')); //fill line with white space
 
 	while (!key::escape(c)&&!key::enter(c)) {
-		wmove(window, 0, 0); //goto start of line
-		write(std::string(termx, ' ')); //fill line with white space
-		wmove(window, 0, 0); //go back to start of line
+		term->move(0, 0); //goto start of line
+		term->write(std::string(term->getx(), ' ')); //fill line with white space
+		term->move(0, 0); //go back to start of line
 
 		parseKey(c); //parse key press
-		write(superLine->get()); //write line
-		wmove(window, 0, superx); //move cursor back to correct position
+		term->write(superLine->get()); //write line
+		term->move(superx, 0); //move cursor back to correct position
 
 		c=getch();
 	}
