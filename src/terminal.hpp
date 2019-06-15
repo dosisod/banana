@@ -11,11 +11,14 @@ class Terminal {
 public:
 	Terminal(); //creates the terminal instance
 
-	void write(std::string s);
+	void write(std::string s); //writes a string to the screen
 
-	void update();
+	void update(); //updates x and y of terminal
 
 	void move(int x, int y); //move to raw position x y
+
+	int getx() { return x; } //return x and y of screen
+	int gety() { return y; } //
 
 private:
 	WINDOW* window;
