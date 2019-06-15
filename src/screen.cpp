@@ -50,6 +50,13 @@ Screen::Screen() {
 				file->saveas(s);
 				this->~Screen();
 				exit(0);
+			}),
+		std::make_shared<Command>( //open another file in same buffer
+			"open o", [=](std::string s) {
+				useBuffer(
+					std::make_shared<File>(s)
+				);
+				home();
 			})
 		})
 	);
