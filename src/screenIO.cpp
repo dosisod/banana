@@ -95,7 +95,7 @@ void Screen::parseKey(int c) {
 			int tmpx=currx;
 
 			setxy(0, curry);
-			write(file->insert(c, tmpx, curry));
+			term->write(file->insert(c, tmpx, curry));
 
 			if (key::backspace(c)) setxy(tmpx-1, curry);
 			else setxy(tmpx+1, curry);

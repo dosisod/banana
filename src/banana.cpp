@@ -1,9 +1,12 @@
 #include <string>
+#include <memory>
 
+#include "terminal.hpp"
 #include "screen.hpp"
 
 int main (int argc, char *argv[]) {
-	Screen screen;
+	std::shared_ptr<Terminal> term=std::make_shared<Terminal>();
+	Screen screen { term };
 
 	if (argc==1) {
 		screen.useBuffer(
@@ -16,7 +19,7 @@ int main (int argc, char *argv[]) {
 		);
 	}
 	else {
-		screen.write("banana takes exactly 1 or 0 parameters (for now)\n");
+		term->write("banana takes exactly 1 or 0 parameters (for now)\n");
 		screen.pause();
 
 		return 1;
