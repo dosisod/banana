@@ -36,6 +36,11 @@ ScreenMaster::ScreenMaster(std::shared_ptr<Terminal> t) {
 					std::make_shared<File>(s)
 				);
 				screen()->home();
+			}),
+		std::make_shared<Command>( //open another file in same buffer
+			"tabnew tn", [=](std::string s) {
+				addBuffer(s);
+				screen()->home();
 			})
 		})
 	);
@@ -84,11 +89,17 @@ void ScreenMaster::super() {
 	term->write(std::string(term->getx(), ' ')); //fill line with white space
 	term->move(0, 0);
 
-	term->write( //print file info until a key is pressed
-		"  ["+
-		screen()->file->getfn()+
-		"]"
-	);
+	//print file info until a key is pressed
+	term->write(" ");
+
+	for (std::vector<Screen>::size_type i=0;i!=screens.size();i++) {
+		if ((int)i==currentscr) { //indicates current tab
+			term->write(" "+screens[i]->file->getfn());
+		}
+		else {
+			term->write(" ["+screens[i]->file->getfn()+"]");
+		}
+	}
 	term->move(0, 0);
 
 	int c=getch();
