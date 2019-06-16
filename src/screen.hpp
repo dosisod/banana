@@ -15,8 +15,6 @@ public:
 	Screen(std::shared_ptr<Terminal> t); //create screen instance
 	~Screen(); //close everything nicely
 
-	void super(); //go into super mode (command mode)
-
 	void pause();
 
 	void parseKey(int c); //parses and interprets key
@@ -37,17 +35,10 @@ private:
 	int currx=0;
 	int curry=0; //current xy of cursor
 
-	std::shared_ptr<Line> superLine; //stores line for super mode
-	int superx=0; //x position of cursor when in super mode
-
 	std::shared_ptr<File> file; //stores the file buffer
 	int ruler; //defined from file
 
 	bool wordwrap=false; //whether or not to wrap text
-
-	bool isSuper=false; //whether or not super is active
-
-	std::shared_ptr<Commander> commands; //pointer for storing the commander
 };
 
 #endif
