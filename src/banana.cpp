@@ -25,7 +25,7 @@ int main (int argc, char *argv[]) {
 	master->home();
 
 	do {
-		master->parseKey(getch());
+		master.parseKey(getch());
 		master->render();
 	} while (true);
 
