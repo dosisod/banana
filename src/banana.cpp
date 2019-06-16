@@ -1,36 +1,35 @@
 #include <string>
+#include <memory>
 
-#include "screen.hpp"
+#include "screenMaster.hpp"
+#include "terminal.hpp"
 
 int main (int argc, char *argv[]) {
-	Screen screen;
+	std::shared_ptr<Terminal> term=std::make_shared<Terminal>();
+	ScreenMaster master { term };
 
 	if (argc==1) {
-		screen.useBuffer(
-			std::make_shared<File>("")
-		);
+		master.addBuffer("");
 	}
 	else if (argc==2) {
-		screen.useBuffer(
-			std::make_shared<File>(std::string(argv[1]))
-		);
+		master.addBuffer(std::string(argv[1]));
 	}
 	else {
-		screen.write("banana takes exactly 1 or 0 parameters (for now)\n");
-		screen.pause();
+		term->write("banana takes exactly 1 or 0 parameters (for now)\n");
+		master->pause();
 
 		return 1;
 	}
 
-	screen.render();
-	screen.home();
+	master->render();
+	master->home();
 
 	do {
-		screen.parseKey(getch());
-		screen.render();
+		master.parseKey(getch());
+		master->render();
 	} while (true);
 
-	screen.pause();
+	master->pause();
 
 	return 0;
 }

@@ -18,13 +18,13 @@ void Screen::setxy(int x, int y) {
 	//make sure cursor stays within bounds
 	if (
 		x<0||
-		x>=(termx-ruler-3)||
-		y>=termy
+		x>=(term->getx()-ruler-3)||
+		y>=term->gety()
 	) return;
 
 	currx=x; //update current position
 	curry=y; //
-	wmove(window, y, x+ruler+1);
+	term->move(x+ruler+1, y);
 }
 
 void Screen::delta(int dx, int dy) {

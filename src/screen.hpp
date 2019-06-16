@@ -4,23 +4,21 @@
 #include <ncurses.h>
 #include <vector>
 #include <string>
+#include <memory>
 
 #include "commander.hpp"
+#include "terminal.hpp"
 #include "file.hpp"
 
 class Screen {
 public:
-	Screen(); //create blank screen
+	Screen(std::shared_ptr<Terminal> t); //create screen instance
 	~Screen(); //close everything nicely
-
-	void super(); //go into super mode (command mode)
 
 	void pause();
 
 	void parseKey(int c); //parses and interprets key
 	void parseKeys(std::vector<int> c); //parses and interprets an array of keys
-
-	void write(std::string s);
 
 	void render(); //draws state of file to screen
 	void render(int fy, int ty); //render screen starting with file line y at terminal line y
@@ -31,26 +29,17 @@ public:
 
 	void useBuffer(std::shared_ptr<File> f); //switch which buffer to use
 
+	std::shared_ptr<File> file; //stores the file buffer
+
 private:
-	WINDOW* window;
+	std::shared_ptr<Terminal> term; //stores common terminal object
 
 	int currx=0;
 	int curry=0; //current xy of cursor
 
-	std::shared_ptr<Line> superLine; //stores line for super mode
-	int superx=0; //x position of cursor when in super mode
-
-	int termx, termy; //x and y dimension of terminal
-	void update(); //updates x and y
-
-	std::shared_ptr<File> file; //stores the file buffer
 	int ruler; //defined from file
 
 	bool wordwrap=false; //whether or not to wrap text
-
-	bool isSuper=false; //whether or not super is active
-
-	std::shared_ptr<Commander> commands; //pointer for storing the commander
 };
 
 #endif
