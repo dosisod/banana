@@ -85,7 +85,3 @@ void Screen::useBuffer(std::shared_ptr<File> f) {
 	file=f;
 	ruler=std::log10(file->lines())+1;
 }
-
-std::string Screen::getfn() {
-	return file->getfn();
-}

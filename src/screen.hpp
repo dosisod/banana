@@ -28,7 +28,8 @@ public:
 	void delta(int dx, int dy); //move cursor relative to current pos
 
 	void useBuffer(std::shared_ptr<File> f); //switch which buffer to use
-	std::string getfn(); //allows screenMaster access to filename
+
+	std::shared_ptr<File> file; //stores the file buffer
 
 private:
 	std::shared_ptr<Terminal> term; //stores common terminal object
@@ -36,7 +37,6 @@ private:
 	int currx=0;
 	int curry=0; //current xy of cursor
 
-	std::shared_ptr<File> file; //stores the file buffer
 	int ruler; //defined from file
 
 	bool wordwrap=false; //whether or not to wrap text
