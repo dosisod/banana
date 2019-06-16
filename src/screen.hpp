@@ -28,6 +28,7 @@ public:
 	void delta(int dx, int dy); //move cursor relative to current pos
 
 	void useBuffer(std::shared_ptr<File> f); //switch which buffer to use
+	std::string getfn(); //allows screenMaster access to filename
 
 private:
 	std::shared_ptr<Terminal> term; //stores common terminal object
