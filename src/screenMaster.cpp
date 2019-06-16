@@ -3,6 +3,46 @@
 
 ScreenMaster::ScreenMaster(std::shared_ptr<Terminal> t) {
 	term=t;
+
+	commands=std::make_shared<Commander>(std::vector<std::shared_ptr<Command>>({
+		std::make_shared<Command>(
+			"save s", [=](std::string s) {
+				screen()->file->save();
+			}),
+		std::make_shared<Command>(
+			"saveas sa", [=](std::string s) {
+				screen()->file->saveas(s);
+			}),
+		std::make_shared<Command>(
+			"quit exit q", [=](std::string s) {
+				this->~ScreenMaster(); //calls deconstructor then quits
+				exit(0);
+			}),
+		std::make_shared<Command>( //save under same name then exit
+			"quitsave exitsave qs", [=](std::string s) {
+				screen()->file->save();
+				this->~ScreenMaster();
+				exit(0);
+			}),
+		std::make_shared<Command>( //save under different name then exit
+			"quitas exitas qa", [=](std::string s) {
+				screen()->file->saveas(s);
+				this->~ScreenMaster();
+				exit(0);
+			}),
+		std::make_shared<Command>( //open another file in same buffer
+			"open o", [=](std::string s) {
+				screen()->useBuffer(
+					std::make_shared<File>(s)
+				);
+				screen()->home();
+			})
+		})
+	);
+}
+
+ScreenMaster::~ScreenMaster() {
+	endwin();
 }
 
 std::shared_ptr<Screen> ScreenMaster::operator->() {
@@ -46,7 +86,7 @@ void ScreenMaster::super() {
 
 	term->write( //print file info until a key is pressed
 		"  ["+
-		screen()->getfn()+
+		screen()->file->getfn()+
 		"]"
 	);
 	term->move(0, 0);
@@ -65,7 +105,7 @@ void ScreenMaster::super() {
 
 		c=getch();
 	}
-	//if (key::enter(c)) commands->parse(superLine->getRaw());
+	if (key::enter(c)) commands->parse(superLine->getRaw());
 
 	isSuper=false;
 }

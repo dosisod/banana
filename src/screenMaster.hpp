@@ -10,6 +10,7 @@
 class ScreenMaster {
 public:
 	ScreenMaster(std::shared_ptr<Terminal> t);
+	~ScreenMaster();
 
 	void addBuffer(std::string s); //adds a new screen buffer using file buffer initializer
 
