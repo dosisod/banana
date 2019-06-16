@@ -41,6 +41,20 @@ ScreenMaster::ScreenMaster(std::shared_ptr<Terminal> t) {
 			"tabnew tn", [=](std::string s) {
 				addBuffer(s);
 				screen()->home();
+			}),
+		std::make_shared<Command>( //open another file in same buffer
+			"tab t", [=](std::string s) {
+				try {
+					int input=std::stoi(s);
+
+					//valid tab number was entered
+					if (input>0&&input<=(int)screens.size()) {
+						currentscr=input-1; //tab starts at 1
+						screen()->render();
+					}
+				}
+				//if number is not a number, pass
+				catch (...) {}
 			})
 		})
 	);
