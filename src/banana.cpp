@@ -11,14 +11,10 @@ int main (int argc, char *argv[]) {
 	if (argc==1) {
 		master.addBuffer("");
 	}
-	else if (argc==2) {
-		master.addBuffer(std::string(argv[1]));
-	}
 	else {
-		term->write("banana takes exactly 1 or 0 parameters (for now)\n");
-		master.pause();
-
-		return 1;
+		for (int i=1;i<argc;i++) {
+			master.addBuffer(argv[i]);
+		}
 	}
 
 	master->render();
