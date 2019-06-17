@@ -89,6 +89,10 @@ void ScreenMaster::parseKey(int c) {
 	}
 }
 
+void ScreenMaster::pause() {
+	getch();
+}
+
 void ScreenMaster::super() {
 	isSuper=true;
 

@@ -16,6 +16,8 @@ public:
 
 	void parseKey(int c);
 
+	void pause(); //pauses screen
+
 	std::shared_ptr<Screen> operator->(); //all -> functions done to master are passed to current screen
 	std::shared_ptr<Screen> screen(); //get current screen
 

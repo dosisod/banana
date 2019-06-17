@@ -16,7 +16,7 @@ int main (int argc, char *argv[]) {
 	}
 	else {
 		term->write("banana takes exactly 1 or 0 parameters (for now)\n");
-		master->pause();
+		master.pause();
 
 		return 1;
 	}
@@ -29,7 +29,7 @@ int main (int argc, char *argv[]) {
 		master->render();
 	} while (true);
 
-	master->pause();
+	master.pause();
 
 	return 0;
 }
