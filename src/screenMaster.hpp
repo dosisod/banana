@@ -20,7 +20,9 @@ public:
 
 	std::shared_ptr<Screen> operator->(); //all -> functions done to master are passed to current screen
 	std::shared_ptr<Screen> screen(); //get current screen
+
 	int screenid(); //returns the id of the current screen
+	int parsenum(std::string s, int d); //parse "s" into number, if error return d
 
 private:
 	std::shared_ptr<Terminal> term;

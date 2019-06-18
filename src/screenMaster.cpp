@@ -44,17 +44,17 @@ ScreenMaster::ScreenMaster(std::shared_ptr<Terminal> t) {
 			}),
 		std::make_shared<Command>( //open another file in same buffer
 			"tab t", [=](std::string s) {
-				try {
-					int input=std::stoi(s);
+				int tab=parsenum(s, screenid());
 
-					//valid tab number was entered
-					if (input>0&&input<=(int)screens.size()) {
-						currentscr=input-1; //tab starts at 1
-						screen()->render();
-					}
+				if (tab>0&&tab<=(int)screens.size()) {
+					currentscr=tab-1; //tab starts at 1
+					screen()->render();
 				}
-				//if number is not a number, pass
-				catch (...) {}
+			}),
+		std::make_shared<Command>( //open another file in same buffer
+			"tabdelta td", [=](std::string s) {
+				int tab=parsenum(s, screenid());
+				this->commands->run("tab "+std::to_string(screenid()+tab+1));
 			})
 		})
 	);
@@ -170,4 +170,14 @@ void ScreenMaster::superParse(int c) {
 
 int ScreenMaster::screenid() {
 	return currentscr;
+}
+
+int ScreenMaster::parsenum(std::string s, int d) {
+	try {
+		return std::stoi(s);
+	}
+	//if number is not a number, return default
+	catch (...) {
+		return d;
+	}
 }
