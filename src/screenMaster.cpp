@@ -167,3 +167,7 @@ void ScreenMaster::superParse(int c) {
 		else if (!key::backspace(c)) superx++;
 	}
 }
+
+int ScreenMaster::screenid() {
+	return currentscr;
+}
