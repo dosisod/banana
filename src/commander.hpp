@@ -9,7 +9,8 @@ class Commander { //holds all of the commands to be used
 public:
 	Commander(std::vector<std::shared_ptr<Command>> c);
 
-	void parse(std::string str); //parse and call function accordingly
+	std::pair<std::string, std::string> parse(std::string str); //returns parsed parameters
+	void run(std::string str); //parses and call function accordingly
 
 private:
 	std::vector<std::shared_ptr<Command>> commands;

@@ -134,7 +134,7 @@ void ScreenMaster::super() {
 
 		c=getch();
 	}
-	if (key::enter(c)) commands->parse(superLine->getRaw());
+	if (key::enter(c)) commands->run(superLine->getRaw());
 
 	isSuper=false;
 }
