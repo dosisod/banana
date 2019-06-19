@@ -16,7 +16,7 @@ void Screen::render(int fy, int ty) {
 
 	int lines=file->lines()-fy; //dont want to call this every time
 
-	for (int i=0;i<term->gety();i++) { //must go through all lines to fully clear screen
+	for (int i=0;i<term->gety()-ty;i++) { //must go through all lines to fully clear screen
 		if (i<lines) {
 			attron(COLOR_PAIR(1)); //switch to black on yellow
 
