@@ -5,18 +5,20 @@
 #include "file.hpp"
 #include "line.hpp"
 
-File::File(std::string fn) {
+File::File(std::string fn, int tab) {
+	tabsize=tab;
+
 	filename=fn;
 	stream.open(filename);
 
 	if (stream.is_open()) {
 		std::string line="";
 		while (std::getline(stream, line)) {
-			buffer.push_back(std::make_shared<Line>(line));
+			buffer.push_back(std::make_shared<Line>(line, tab));
 		}
 	}
 	else {
-		buffer.push_back(std::make_shared<Line>("")); //append a single blank file
+		buffer.push_back(std::make_shared<Line>("", tab)); //append a single blank file
 	}
 	stream.close();
 }
@@ -43,14 +45,14 @@ void File::newline(int x, int y) {
 	std::vector<std::shared_ptr<Line>>::iterator it=buffer.begin();
 
 	//add new line
-	buffer.insert(it+y+1, std::make_shared<Line>(buffer[y]->get().substr(x)));
+	buffer.insert(it+y+1, std::make_shared<Line>(buffer[y]->get().substr(x), tabsize));
 
 	//set the line that was split to the new parsed line
-	buffer[y]=std::make_shared<Line>(buffer[y]->get().substr(0,x));
+	buffer[y]=std::make_shared<Line>(buffer[y]->get().substr(0,x), tabsize);
 }
 
 void File::delline(int y) {
-	buffer[y-1]=std::make_shared<Line>(buffer[y-1]->get()+buffer[y]->get());
+	buffer[y-1]=std::make_shared<Line>(buffer[y-1]->get()+buffer[y]->get(), tabsize);
 
 	//remove line that cursor was
 	buffer.erase(buffer.begin()+y);

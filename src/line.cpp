@@ -4,8 +4,9 @@
 #include "line.hpp"
 #include "keys.hpp"
 
-Line::Line(std::string s) {
+Line::Line(std::string s, int tab) {
 	str=s;
+	tabsize=tab;
 }
 
 std::string Line::get() {

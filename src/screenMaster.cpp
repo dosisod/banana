@@ -33,7 +33,7 @@ ScreenMaster::ScreenMaster(std::shared_ptr<Terminal> t) {
 		std::make_shared<Command>( //open another file in same buffer
 			"open o", [=](std::string s) {
 				screen()->useBuffer(
-					std::make_shared<File>(s)
+					std::make_shared<File>(s, tabsize)
 				);
 				screen()->home();
 			}),
@@ -74,10 +74,10 @@ std::shared_ptr<Screen> ScreenMaster::screen() {
 
 void ScreenMaster::addBuffer(std::string s) {
 	screens.emplace_back(
-		std::make_shared<Screen>(term)
+		std::make_shared<Screen>(term, tabsize)
 	);
 	currentscr++;
-	screens[screens.size()-1]->useBuffer(std::make_shared<File>(s));
+	screens[screens.size()-1]->useBuffer(std::make_shared<File>(s, tabsize));
 }
 
 void ScreenMaster::parseKey(int c) {
@@ -98,7 +98,7 @@ void ScreenMaster::super() {
 
 	//clear from last time super was active
 	superx=0;
-	superLine=std::make_shared<Line>("");
+	superLine=std::make_shared<Line>("", tabsize);
 
 	screen()->render(0, 1); //move all lines down one
 

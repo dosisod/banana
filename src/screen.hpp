@@ -12,7 +12,7 @@
 
 class Screen {
 public:
-	Screen(std::shared_ptr<Terminal> t); //create screen instance
+	Screen(std::shared_ptr<Terminal> t, int tab); //create screen instance
 	~Screen(); //close everything nicely
 
 	void pause();
@@ -38,6 +38,8 @@ private:
 	int curry=0; //current xy of cursor
 
 	int ruler; //defined from file
+
+	int tabsize=4; //overriden when initiated
 
 	bool wordwrap=false; //whether or not to wrap text
 };

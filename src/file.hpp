@@ -10,7 +10,7 @@
 
 class File {
 public:
-	File(std::string fn);
+	File(std::string fn, int tab);
 
 	int lines(); //number of lines in file buffer
 	std::string line(int n); //get line N from buffer
@@ -32,6 +32,8 @@ private:
 
 	std::fstream stream; //stream is here as it can be used when reading and writing
 	std::vector<std::shared_ptr<Line>> buffer; //contains the lines of the file
+
+	int tabsize=4; //overriden when initiated
 };
 
 #endif

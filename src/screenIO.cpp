@@ -70,8 +70,17 @@ void Screen::parseKey(int c) {
 		setxy(0, curry);
 		term->write(file->insert(c, tmpx, curry));
 
-		if (key::backspace(c)) setxy(tmpx-1, curry);
-		else setxy(tmpx+1, curry);
+		if (key::backspace(c)) {
+			setxy(tmpx-1, curry);
+		}
+		else if (c=='\t') {
+			setxy(
+				tmpx+tabsize+(tmpx%tabsize), curry
+			);
+		}
+		else {
+			setxy(tmpx+1, curry);
+		}
 	}
 }
 

@@ -37,6 +37,8 @@ private:
 	int superx=0; //x position of cursor when in super mode
 	bool isSuper=false; //whether or not super is active
 
+	int tabsize=4;
+
 	std::shared_ptr<Commander> commands; //pointer for storing the commander
 };
 

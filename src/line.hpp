@@ -5,8 +5,8 @@
 
 class Line {
 public:
-	//creates a new line object from string
-	Line(std::string str);
+	//creates a new line object from string, and tabsize
+	Line(std::string str, int tab);
 
 	std::string insert(int c, int x);
 
