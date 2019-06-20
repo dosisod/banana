@@ -28,6 +28,7 @@ public:
 	void delta(int dx, int dy); //move cursor relative to current pos
 
 	void useBuffer(std::shared_ptr<File> f); //switch which buffer to use
+	void useBuffer(std::string fn); //switch buffer using filename
 
 	std::shared_ptr<File> file; //stores the file buffer
 
