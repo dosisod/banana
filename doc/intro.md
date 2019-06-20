@@ -9,10 +9,14 @@ Included is a structure diagram and complete headers list with link to docs+sour
 ```
 banana
 //main file
+|    Terminal
+|    //stores and manages calls to the window
+|    //all screen classes will have a reference to this class
+|    |
+|    |    functions for moving cursor, writing etc
 |
-|    Screen
-|    //acts as the main "file" to "screen" interface
-|    //handles all displaying, parsing and rendering
+|    ScreenMaster
+|    //used to manage multiple screens at once
 |    |
 |    |    Line (for super line aka command mode)
 |    |    //allows for parsing of text while inputing commands
@@ -21,24 +25,9 @@ banana
 |    |    |    parsing methods etc (manipulating string)
 |    |
 |    |
-|    |    File (pointer)
-|    |    //stores current file buffer
-|    |    //tells screen what file it needs to be editing/parsing
-|    |    //screen does not have direct access to file, but can manipulate it
-|    |    |
-|    |    |    Vector (vector of Lines)
-|    |    |    //allows for easy manipulation of strings in the file
-|    |    |    |
-|    |    |    |    Line
-|    |    |    |    |
-|    |    |    |    | same as above Line class
-|    |    |
-|    |    |
-|    |    |    functions (merging/splitting lines, saving etc)
-|    |
-|    |
 |    |    Commander
-|    |    //takes input and determines what Command needs to be called
+|    |    //holds many command objects and parsing functions
+|    |    //takes input and determines what Command object needs to be called
 |    |    |
 |    |    |    Vector (of Commands)
 |    |    |    //allows adding and deleting of commands
@@ -52,10 +41,34 @@ banana
 |    |    |    |    | funciton to check whether to trigger lambda
 |    |    |
 |    |    |
-|    |    |    functions (parsing string and calling appropriate funcition)
+|    |    |    other functions (parsing string and calling appropriate funcition)
+|    |
+|    |
+|    |    Vector of Screen(s)
+|    |    //all screens are able to write to the terminal
+|    |    //screens can be added and removed by screen master
+|    |    |
+|    |    |    Screen
+|    |    |    //single screen (tab)
+|    |    |    //holds a single file buffer per screen
+|    |    |    |
+|    |    |    |    File (pointer)
+|    |    |    |    //stores current file buffer
+|    |    |    |    //tells screen what file it needs to be editing/parsing
+|    |    |    |    //screen does not have direct access to file, but can manipulate it
+|    |    |    |    |
+|    |    |    |    |    Vector (vector of Lines)
+|    |    |    |    |    //allows for easy manipulation of strings in the file
+|    |    |    |    |    |
+|    |    |    |    |    |    Line
+|    |    |    |    |    |    |
+|    |    |    |    |    |    | same as above Line class
+|    |    |    |    |
+|    |    |    |    |
+|    |    |    |    |    functions (merging/splitting lines, saving etc)
 ```
 
-This is a concise diagram, showing how classes are organized in the hierarchy
+This is a concise diagram, showing how the more important class functions are implemented
 
 For more details on how a class, function, or variable is intended to be used, refer to the header list below
 
