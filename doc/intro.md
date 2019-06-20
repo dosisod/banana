@@ -65,140 +65,192 @@ Below is a list of stripped headers for quick reference
 
 ## `Commander` Class
 
-`Commander::Commander(std::vector<std::shared_ptr<Command>> c)`
+`Commander(std::vector<std::shared_ptr<Command>> c);`
 
-`void Commander::parse(std::string str)`
+`const typedef std::pair<std::string, std::string> params;`
 
-`std::vector<std::shared_ptr<Command>> Commander::commands`
+`params parse(std::string str);`
+
+`void run(std::string str);`
+
+`std::vector<std::shared_ptr<Command>> commands;`
 
 ## `Command` Class
 
-`Command::Command(std::string c, std::function<void(std::string)> f)`
+`Command(std::string c, std::function<void(std::string)> f);`
 
-`bool Command::check(std::string s)`
+`bool check(std::string s);`
 
-`void Command::run(std::string s)`
+`void run(std::string s);`
 
-`std::vector<std::string> Command::calls`
+`std::vector<std::string> calls;`
 
-`std::function<void(std::string)> Command::func`
+`std::function<void(std::string)> func;`
 
 ## `File` Class
 
-`File::File(std::string fn)`
+`File(std::string fn, int tab);`
 
-`int File::lines()`
+`int lines();`
 
-`std::string File::line(int n)`
+`std::string line(int n);`
 
-`int File::linesize(int n)`
+`int linesize(int n);`
 
-`std::string File::insert(int c, int x, int y)`
+`std::string insert(int c, int x, int y);`
 
-`void File::newline(int x, int y)`
+`void newline(int x, int y);`
 
-`void File::delline(int y)`
+`void delline(int y);`
 
-`void File::save()`
+`void save();`
 
-`void File::saveas(std::string fn)`
+`void saveas(std::string fn);`
 
-`std::string File::filename`
+`std::string getfn();`
 
-`std::fstream File::stream`
+`std::string filename;`
 
-`std::vector<std::shared_ptr<Line>> File::buffer`
+`std::fstream stream;`
+
+`std::vector<std::shared_ptr<Line>> buffer;`
+
+`int tabsize;`
 
 ## `key` Namespace
 
-`bool key::enter(int c)`
+`bool enter(int c);`
 
-`bool key::backspace(int c)`
+`bool backspace(int c);`
 
-`bool key::del(int c)`
+`bool del(int c);`
 
-`bool key::home(int c)`
+`bool home(int c);`
 
-`bool key::end(int c)`
+`bool end(int c);`
 
-`bool key::up(int c)`
+`bool up(int c);`
 
-`bool key::down(int c)`
+`bool down(int c);`
 
-`bool key::left(int c)`
+`bool left(int c);`
 
-`bool key::right(int c)`
+`bool right(int c);`
 
-`bool key::escape(int c)`
+`bool escape(int c);`
 
 ## `Line` Class
 
-`Line::Line(std::string str)`
+`Line(std::string str, int tab);`
 
-`std::string Line::insert(int c, int x)`
+`std::string insert(int c, int x);`
 
-`std::string Line::get()`
+`std::string get();`
 
-`std::string Line::getRaw()`
+`std::string getRaw();`
 
-`int Line::size()`
+`int size();`
 
-`std::string Line::str`
+`std::string str;`
 
-`int Line::decode(int x)`
+`int decode(int x);`
 
-`int Line::tabsize`
+`int tabsize;`
 
 ## `Screen` Class
 
-`Screen::Screen()`
+`Screen(std::shared_ptr<Terminal> t, int tab);`
 
-`Screen::~Screen()`
+`~Screen();`
 
-`void Screen::super()`
+`void pause();`
 
-`void Screen::pause()`
+`void parseKey(int c);`
 
-`void Screen::parseKey(int c)`
+`void parseKeys(std::vector<int> c);`
 
-`void Screen::parseKeys(std::vector<int> c)`
+`void render();`
 
-`void Screen::write(std::string s)`
+`void render(int fy, int ty);`
 
-`void Screen::render()`
+`void home();`
 
-`void Screen::render(int fy, int ty)`
+`void setxy(int x, int y);`
 
-`void Screen::home()`
+`void delta(int dx, int dy);`
 
-`void Screen::setxy(int x, int y)`
+`void useBuffer(std::shared_ptr<File> f);`
 
-`void Screen::delta(int dx, int dy)`
+`std::shared_ptr<File> file;`
 
-`void Screen::useBuffer(std::shared_ptr<File> f)`
+`std::shared_ptr<Terminal> term;`
 
-`WINDOW* Screen::window`
+`int currx;`
 
-`int Screen::currx`
+`int curry;`
 
-`int Screen::curry`
+`int ruler;`
 
-`std::shared_ptr<Line> Screen::superLine`
+`int tabsize;`
 
-`int Screen::superx`
+`bool wordwrap;`
 
-`int Screen::termx`
+## `ScreenMaster` Class
 
-`int Screen::termy`
+`ScreenMaster(std::shared_ptr<Terminal> t);`
 
-`void Screen::update()`
+`~ScreenMaster();`
 
-`std::shared_ptr<File> Screen::file`
+`void addBuffer(std::string s);`
 
-`int Screen::ruler`
+`void parseKey(int c);`
 
-`bool Screen::wordwrap`
+`void pause();`
 
-`bool Screen::isSuper`
+`std::shared_ptr<Screen> operator->();`
 
-`std::shared_ptr<Commander> Screen::commands`
+`std::shared_ptr<Screen> screen();`
+
+`int screenid();`
+
+`int parsenum(std::string s, int d);`
+
+`std::shared_ptr<Terminal> term;`
+
+`std::vector<std::shared_ptr<Screen>> screens;`
+
+`int currentscr;`
+
+`void super();`
+
+`void superParse(int c);`
+
+`std::shared_ptr<Line> superLine;`
+
+`int superx;`
+
+`bool isSuper;`
+
+`int tabsize;`
+
+`std::shared_ptr<Commander> commands;`
+
+## `Terminal` Class
+
+`Terminal();`
+
+`void write(std::string s);`
+
+`void update();`
+
+`void move(int x, int y);`
+
+`int getx();`
+
+`int gety();`
+
+`WINDOW* window;`
+
+`int x;`
+
+`int y;`
