@@ -117,9 +117,9 @@ void ScreenMaster::super() {
 
 	for (std::vector<Screen>::size_type i=0;i!=screens.size();i++) {
 		if ((int)i==currentscr) { //indicates current tab
-			term->write(" "+screens[i]->file->getfn());
+			term->write(" <"+screens[i]->file->getfn()+">");
 		}
-		else {
+		else { //indicates inactive tab
 			term->write(" ["+screens[i]->file->getfn()+"]");
 		}
 	}
