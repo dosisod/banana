@@ -37,12 +37,17 @@ ScreenMaster::ScreenMaster(std::shared_ptr<Terminal> t) {
 				);
 				screen()->home();
 			}),
-		std::make_shared<Command>( //open another file in same buffer
+		std::make_shared<Command>( //open help
+			"help h", [=](std::string s) {
+				addBuffer("help.md");
+				screen()->home();
+			}),
+		std::make_shared<Command>( //open another file in new buffer
 			"tabnew tn", [=](std::string s) {
 				addBuffer(s);
 				screen()->home();
 			}),
-		std::make_shared<Command>( //open another file in same buffer
+		std::make_shared<Command>( //change tab
 			"tab t", [=](std::string s) {
 				int tab=parsenum(s, screenid());
 
@@ -51,7 +56,7 @@ ScreenMaster::ScreenMaster(std::shared_ptr<Terminal> t) {
 					screen()->render();
 				}
 			}),
-		std::make_shared<Command>( //open another file in same buffer
+		std::make_shared<Command>( //move over N tabs
 			"tabdelta td", [=](std::string s) {
 				int tab=parsenum(s, screenid());
 				this->commands->run("tab "+std::to_string(screenid()+tab+1));
