@@ -33,6 +33,15 @@ std::string Line::getRaw() {
 	return str;
 }
 
+std::string Line::getIndent() {
+	int i=0;
+	for (;i<(int)str.length();i++) {
+		if (str[i]==' '||str[i]=='\t') i++;
+		else break;
+	}
+	return str.substr(0, i);
+}
+
 int Line::size() {
 	return get().length();
 }
