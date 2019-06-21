@@ -45,7 +45,14 @@ void File::newline(int x, int y) {
 	std::vector<std::shared_ptr<Line>>::iterator it=buffer.begin();
 
 	//add new line
-	buffer.insert(it+y+1, std::make_shared<Line>(buffer[y]->get().substr(x), tabsize));
+	buffer.insert(
+		it+y+1,
+		std::make_shared<Line>(
+			buffer[y]->getIndent()+
+			buffer[y]->get().substr(x),
+			tabsize
+		)
+	);
 
 	//set the line that was split to the new parsed line
 	buffer[y]=std::make_shared<Line>(buffer[y]->get().substr(0,x), tabsize);
