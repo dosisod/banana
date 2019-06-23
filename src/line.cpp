@@ -33,6 +33,14 @@ std::string Line::getRaw() {
 	return str;
 }
 
+std::string Line::substr(int s) {
+	return getRaw().substr(decode(s));
+}
+
+std::string Line::substr(int s, int e) {
+	return getRaw().substr(decode(s), decode(e));
+}
+
 int Line::size() {
 	return get().length();
 }

@@ -12,6 +12,8 @@ public:
 
 	std::string get(); //gets tab-parsed string
 	std::string getRaw(); //returns raw string
+	std::string substr(int s); //substr using getRaw and decode
+	std::string substr(int s, int e); //substr using getRaw and decode
 
 	int size(); //returns size of get()
 

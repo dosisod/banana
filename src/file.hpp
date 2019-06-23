@@ -14,6 +14,7 @@ public:
 
 	int lines(); //number of lines in file buffer
 	std::string line(int n); //get line N from buffer
+	std::string rawLine(int n); //get rawline N from buffer
 	int linesize(int n); //get length of line N
 
 	//insert char c at line y, over x places, return modified line

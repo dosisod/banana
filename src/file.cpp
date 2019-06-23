@@ -27,6 +27,10 @@ int File::lines() {
 	return buffer.size();
 }
 
+std::string File::rawLine(int n) {
+	return buffer[n]->getRaw();
+}
+
 std::string File::line(int n) {
 	return buffer[n]->get();
 }
@@ -54,24 +58,24 @@ void File::newline(int x, int y) {
 		it+y+1,
 		std::make_shared<Line>(
 			indent+
-			buffer[y]->get().substr(x),
+			buffer[y]->substr(x),
 			tabsize
 		)
 	);
 
 	//updates old line
-	buffer[y]=std::make_shared<Line>(buffer[y]->get().substr(0,x), tabsize);
+	buffer[y]=std::make_shared<Line>(buffer[y]->substr(0, x), tabsize);
 }
 
 void File::delline(int y) {
-	buffer[y-1]=std::make_shared<Line>(buffer[y-1]->get()+buffer[y]->get(), tabsize);
+	buffer[y-1]=std::make_shared<Line>(buffer[y-1]->getRaw()+buffer[y]->getRaw(), tabsize);
 
 	//remove line that cursor was
 	buffer.erase(buffer.begin()+y);
 }
 
 std::string File::getIndent(int n) {
-	std::string tmp=line(n);
+	std::string tmp=rawLine(n);
 	int i=0;
 
 	for (;i<(int)tmp.length();) {
