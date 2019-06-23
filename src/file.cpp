@@ -48,13 +48,13 @@ void File::newline(int x, int y) {
 	buffer.insert(
 		it+y+1,
 		std::make_shared<Line>(
-			buffer[y]->getIndent()+
+			getIndent(y)+
 			buffer[y]->get().substr(x),
 			tabsize
 		)
 	);
 
-	//set the line that was split to the new parsed line
+	//updates old line
 	buffer[y]=std::make_shared<Line>(buffer[y]->get().substr(0,x), tabsize);
 }
 
@@ -64,6 +64,18 @@ void File::delline(int y) {
 	//remove line that cursor was
 	buffer.erase(buffer.begin()+y);
 }
+
+std::string File::getIndent(int n) {
+	std::string tmp=line(n);
+	int i=0;
+
+	for (;i<(int)tmp.length();) {
+		if (tmp[i]==' '||tmp[i]=='\t') i++;
+		else break;
+	}
+	return tmp.substr(0, i);
+}
+
 
 void File::save() {
 	saveas(filename);

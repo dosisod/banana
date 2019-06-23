@@ -43,6 +43,8 @@ private:
 	int tabsize=4; //overriden when initiated
 
 	bool wordwrap=false; //whether or not to wrap text
+
+	int encode(std::string s); //find what the cursor position should be for a given string
 };
 
 #endif

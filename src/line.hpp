@@ -12,7 +12,6 @@ public:
 
 	std::string get(); //gets tab-parsed string
 	std::string getRaw(); //returns raw string
-	std::string getIndent(); //gets the indent at the start of the line
 
 	int size(); //returns size of get()
 

@@ -33,15 +33,6 @@ std::string Line::getRaw() {
 	return str;
 }
 
-std::string Line::getIndent() {
-	int i=0;
-	for (;i<(int)str.length();i++) {
-		if (str[i]==' '||str[i]=='\t') i++;
-		else break;
-	}
-	return str.substr(0, i);
-}
-
 int Line::size() {
 	return get().length();
 }
@@ -58,7 +49,7 @@ std::string Line::insert(int c, int x) {
 	return get(); //return the parsed version
 }
 
-int Line::decode(int a) {
+int Line::decode(int x) {
 	int counter=0; //number of characters needed to display (eg tabs)
 
 	int i=0;
@@ -70,7 +61,7 @@ int Line::decode(int a) {
 
 			counter+=tmp-1;
 		}
-		if (counter>=a) return i; //keep counting untill the correct character is found
+		if (counter>=x) return i; //keep counting untill the correct character is found
 
 		counter++;
 	}

@@ -50,7 +50,7 @@ void Screen::parseKey(int c) {
 	}
 	else if (key::enter(c)) {
 		file->newline(currx, curry);
-		setxy(0, curry+1);
+		setxy(encode(file->line(curry)), curry+1);
 
 		//update ruler to account for newlines
 		ruler=std::log10(file->lines())+1;
@@ -97,4 +97,14 @@ void Screen::useBuffer(std::shared_ptr<File> f) {
 
 void Screen::useBuffer(std::string fn) {
 	useBuffer(std::make_shared<File>(fn, tabsize));
+}
+
+int Screen::encode(std::string str) {
+	int counter=0;
+
+	for (int i=0;i<(int)str.length();i++) {
+		if (str[i]=='\t') counter+=tabsize;
+		else counter++;
+	}
+	return counter;
 }
