@@ -44,11 +44,16 @@ void File::newline(int x, int y) {
 	//used to insert a new line buffer
 	std::vector<std::shared_ptr<Line>>::iterator it=buffer.begin();
 
+	std::string indent=getIndent(y);
+	if (x<(int)indent.length()) {
+		indent=indent.substr(0, x);
+	}
+
 	//add new line
 	buffer.insert(
 		it+y+1,
 		std::make_shared<Line>(
-			getIndent(y)+
+			indent+
 			buffer[y]->get().substr(x),
 			tabsize
 		)
