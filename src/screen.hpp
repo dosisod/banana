@@ -38,6 +38,8 @@ private:
 	int currx=0;
 	int curry=0; //current xy of cursor
 
+	int filey=0; //terminal renders file lines starting from this point
+
 	int ruler; //defined from file
 
 	int tabsize=4; //overriden when initiated

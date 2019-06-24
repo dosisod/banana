@@ -5,7 +5,7 @@
 //This file contains sections related to rendering the screen
 
 void Screen::render() {
-	render(0, 0);
+	render(filey, 0);
 }
 
 void Screen::render(int fy, int ty) {
@@ -20,10 +20,10 @@ void Screen::render(int fy, int ty) {
 		if (i<lines) {
 			attron(COLOR_PAIR(1)); //switch to black on yellow
 
-			int space=ruler-(int)(std::log10(i+1)+1); //calculate left spacing
+			int space=ruler-(int)(std::log10(i+fy+1)+1); //calculate left spacing
 			if (space>=0) term->write(std::string(space, ' '));
 
-			term->write(std::to_string(i+1)+" "); //print line number
+			term->write(std::to_string(i+fy+1)+" "); //print line number
 
 			attron(COLOR_PAIR(2)); //switch to white on black
 

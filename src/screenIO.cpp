@@ -13,7 +13,10 @@ void Screen::parseKey(int c) {
 	if (key::del(c)) { //convert delete into a backspace
 		currx++; //move over as if it was a backspace
 
-		if (currx>file->linesize(curry)) {
+		if (currx>=file->linesize(curry+filey)&&(curry+filey+2)>file->lines()) {
+			return;
+		}
+		else if (currx>file->linesize(curry+filey)) {
 			if (file->lines()>1) {
 				setxy(0, curry+1);
 			}
@@ -30,36 +33,36 @@ void Screen::parseKey(int c) {
 	}
 	else if (key::left(c)) {
 		//left was pressed while at the start of a line
-		if (currx==0&&curry>0) setxy(file->linesize(curry-1), curry-1);
+		if (currx==0&&(curry+filey)>0) setxy(file->linesize(curry+filey-1), curry-1);
 
 		//left was pressed somewhere else
 		else delta(-1, 0);
 	}
 	else if (key::right(c)) {
 		//right was pressed at the end of a line
-		if (currx==(int)file->linesize(curry)&&curry<file->lines()) setxy(0, curry+1);
+		if (currx==(int)file->linesize(curry+filey)&&(curry+filey)<file->lines()) setxy(0, curry+1);
 
 		//right was pressed somewhere else
 		else delta(1, 0);
 	}
 	else if (key::end(c)) {
-		setxy(file->linesize(curry), curry);
+		setxy(file->linesize(curry+filey), curry);
 	}
 	else if (key::home(c)) {
 		setxy(0, curry);
 	}
 	else if (key::enter(c)) {
-		file->newline(currx, curry);
-		setxy(encode(file->line(curry)), curry+1);
+		file->newline(currx, curry+filey);
+		setxy(encode(file->line(curry+filey)), curry+1);
 
 		//update ruler to account for newlines
 		ruler=std::log10(file->lines())+1;
 	}
 	//backspace is pressed at the start of a line
-	else if (key::backspace(c)&&currx==0&&curry!=0) {
-		int tempx=file->linesize(curry-1);
+	else if (key::backspace(c)&&currx==0&&(curry+filey)!=0) {
+		int tempx=file->linesize(curry+filey-1);
 
-		file->delline(curry);
+		file->delline(curry+filey);
 		setxy(tempx, curry-1);
 
 		ruler=std::log10(file->lines())+1;
@@ -68,14 +71,15 @@ void Screen::parseKey(int c) {
 		int tmpx=currx;
 
 		setxy(0, curry);
-		term->write(file->insert(c, tmpx, curry));
+		term->write(file->insert(c, tmpx, curry+filey));
 
 		if (key::backspace(c)) {
 			setxy(tmpx-1, curry);
 		}
 		else if (c=='\t') {
 			setxy(
-				tmpx+tabsize+(tmpx%tabsize), curry
+				tmpx+tabsize+(tmpx%tabsize),
+				curry
 			);
 		}
 		else {
