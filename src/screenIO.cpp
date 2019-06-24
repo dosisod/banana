@@ -13,7 +13,10 @@ void Screen::parseKey(int c) {
 	if (key::del(c)) { //convert delete into a backspace
 		currx++; //move over as if it was a backspace
 
-		if (currx>file->linesize(curry+filey)) {
+		if (currx>=file->linesize(curry+filey)&&(curry+filey+2)>file->lines()) {
+			return;
+		}
+		else if (currx>file->linesize(curry+filey)) {
 			if (file->lines()>1) {
 				setxy(0, curry+1);
 			}
