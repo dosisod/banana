@@ -68,28 +68,37 @@ void Screen::parseKey(int c) {
 		ruler=std::log10(file->lines())+1;
 	}
 	else {
-		int tmpx=currx;
-
-		setxy(0, curry);
-		term->write(file->insert(c, tmpx, curry+filey));
-
-		if (key::backspace(c)) {
-			setxy(tmpx-1, curry);
-		}
-		else if (key::bracketLeft(c)) {
-			setxy(0, curry);
-			term->write(file->insert(key::bracketize(c), tmpx+1, curry+filey));
-
-			setxy(tmpx+1, curry);
-		}
-		else if (c=='\t') {
-			setxy(
-				tmpx+tabsize+(tmpx%tabsize),
-				curry
-			);
+		//only move cursor when a closing bracket is pressed next to a closed bracket
+		if (key::bracketRight(c)&&file->rawLine(curry)[currx]==c) {
+			setxy(currx+1, curry);
 		}
 		else {
-			setxy(tmpx+1, curry);
+			int tmpx=currx;
+
+			setxy(0, curry);
+			term->write(file->insert(c, tmpx, curry+filey));
+
+			if (key::backspace(c)) {
+				setxy(tmpx-1, curry);
+			}
+			else if (key::bracketLeft(c)) {
+				setxy(0, curry);
+
+				//insert closing bracket
+				term->write(file->insert(key::bracketize(c), tmpx+1, curry+filey));
+
+				//then move back one
+				setxy(tmpx+1, curry);
+			}
+			else if (c=='\t') {
+				setxy(
+					tmpx+tabsize+(tmpx%tabsize),
+					curry
+				);
+			}
+			else {
+				setxy(tmpx+1, curry);
+			}
 		}
 	}
 }
