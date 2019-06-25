@@ -76,6 +76,12 @@ void Screen::parseKey(int c) {
 		if (key::backspace(c)) {
 			setxy(tmpx-1, curry);
 		}
+		else if (key::bracketLeft(c)) {
+			setxy(0, curry);
+			term->write(file->insert(key::bracketize(c), tmpx+1, curry+filey));
+
+			setxy(tmpx+1, curry);
+		}
 		else if (c=='\t') {
 			setxy(
 				tmpx+tabsize+(tmpx%tabsize),
