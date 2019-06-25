@@ -15,6 +15,12 @@ namespace key {
 	bool left(int c);
 	bool right(int c);
 	bool escape(int c);
+
+	bool bracketLeft(char c);
+	bool bracketRight(char c);
+	bool bracket(char c); //true if c is a left/right bracket
+
+	char bracketize(char b); //get other bracket for given bracket, or zero
 }
 
 #endif

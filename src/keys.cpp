@@ -11,4 +11,20 @@ namespace key {
 	bool left(int c) { return c==KEY_LEFT; }
 	bool right(int c) { return c==KEY_RIGHT; }
 	bool escape(int c) { return c==27; }
+
+	bool bracketLeft(char c) { return (c=='('||c=='['||c=='{'||c=='\''||c=='\"'); }
+	bool bracketRight(char c) { return (c==')'||c==']'||c=='}'||c=='\''||c=='\"'); }
+	bool bracket(char c) { return (bracketLeft(c)||bracketRight(c)); }
+
+	char bracketize(char b) {
+		if (b=='(') return ')';
+		else if (b==')') return '(';
+		else if (b=='[') return ']';
+		else if (b==']') return '[';
+		else if (b=='{') return '}';
+		else if (b=='}') return '{';
+		else if (b=='\"') return '\"';
+		else if (b=='\'') return '\'';
+		else return 0;
+	}
 }
