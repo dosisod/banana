@@ -17,10 +17,9 @@ Command::Command(std::string c, std::function<void(std::string)> f) {
 	func=f;
 }
 
-Command::Command(std::string c, std::function<void(void)> f) {
-	//converts given lambda into a constructor for above
-	Command(c, [=](std::string s){ f(); });
-}
+//converts given lambda into a constructor for above
+Command::Command(std::string c, std::function<void()> f) :
+	Command(c, [=](std::string s){ f(); }) {}
 
 bool Command::check(std::string s) {
 	for (auto i:calls) {
