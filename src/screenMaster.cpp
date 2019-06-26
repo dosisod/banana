@@ -63,6 +63,23 @@ ScreenMaster::ScreenMaster(std::shared_ptr<Terminal> t) {
 			"tabdelta td", [=](std::string s) {
 				int tab=parsenum(s, screenid());
 				this->commands->run("tab "+std::to_string(screenid()+tab+1));
+			}),
+		std::make_shared<Command>( //move over N tabs
+			"macronew mn", [=]() {
+				term->move(0, 0);
+				term->write(std::string(term->getx(), ' '));
+				term->move(0, 0);
+				term->write("RECORDING");
+
+				std::vector<int> keys;
+				int current=getch();
+
+				while (!(key::enter(current)||key::escape(current))) {
+					keys.emplace_back(current);
+					current=getch();
+				}
+
+				screen()->parseKeys(keys);
 			})
 		})
 	);
