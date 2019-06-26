@@ -27,4 +27,20 @@ namespace key {
 		else if (b=='\'') return '\'';
 		else return 0;
 	}
+
+	bool valid(int c) {
+		return (
+			c<128||
+			enter(c)||
+			backspace(c)||
+			home(c)||
+			del(c)||
+			end(c)||
+			up(c)||
+			down(c)||
+			left(c)||
+			right(c)||
+			escape(c)
+		);
+	}
 }

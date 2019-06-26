@@ -67,7 +67,7 @@ void Screen::parseKey(int c) {
 
 		ruler=std::log10(file->lines())+1;
 	}
-	else {
+	else if (key::valid(c)) {
 		//only move cursor when a closing bracket is pressed next to a closed bracket
 		if (key::bracketRight(c)&&file->rawLine(curry)[currx]==c) {
 			setxy(currx+1, curry);

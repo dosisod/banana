@@ -21,6 +21,8 @@ namespace key {
 	bool bracket(char c); //true if c is a left/right bracket
 
 	char bracketize(char b); //get other bracket for given bracket, or zero
+
+	bool valid(int c); //true if key isnt a control key
 }
 
 #endif
