@@ -6,7 +6,7 @@ ScreenMaster::ScreenMaster(std::shared_ptr<Terminal> t) {
 
 	commands=std::make_shared<Commander>(std::vector<std::shared_ptr<Command>>({
 		std::make_shared<Command>(
-			"save s", [=](std::string s) {
+			"save s", [=]() {
 				screen()->file->save();
 			}),
 		std::make_shared<Command>(
@@ -14,7 +14,7 @@ ScreenMaster::ScreenMaster(std::shared_ptr<Terminal> t) {
 				screen()->file->saveas(s);
 			}),
 		std::make_shared<Command>(
-			"quit exit q", [=](std::string s) {
+			"quit exit q", [=]() {
 				if (screens.size()>1) { //calls deconstructor then quits
 					screens.erase(screens.begin()+currentscr);
 
@@ -26,7 +26,7 @@ ScreenMaster::ScreenMaster(std::shared_ptr<Terminal> t) {
 				}
 			}),
 		std::make_shared<Command>( //save under same name then exit
-			"quitsave exitsave qs", [=](std::string s) {
+			"quitsave exitsave qs", [=]() {
 				screen()->file->save();
 				this->commands->run("quit");
 			}),
@@ -41,7 +41,7 @@ ScreenMaster::ScreenMaster(std::shared_ptr<Terminal> t) {
 				screen()->home();
 			}),
 		std::make_shared<Command>( //open help
-			"help h", [=](std::string s) {
+			"help h", [=]() {
 				addBuffer("help.md");
 				screen()->home();
 			}),
