@@ -92,6 +92,8 @@ Below is a list of stripped headers for quick reference
 
 `Command(std::string c, std::function<void(std::string)> f);`
 
+`Command(std::string c, std::function<void(void)> f);`
+
 `bool check(std::string s);`
 
 `void run(std::string s);`
@@ -108,6 +110,8 @@ Below is a list of stripped headers for quick reference
 
 `std::string line(int n);`
 
+`std::string rawLine(int n);`
+
 `int linesize(int n);`
 
 `std::string insert(int c, int x, int y);`
@@ -115,6 +119,8 @@ Below is a list of stripped headers for quick reference
 `void newline(int x, int y);`
 
 `void delline(int y);`
+
+`std::string getIndent(int n);`
 
 `void save();`
 
@@ -127,6 +133,8 @@ Below is a list of stripped headers for quick reference
 `std::fstream stream;`
 
 `std::vector<std::shared_ptr<Line>> buffer;`
+
+`bool eol;`
 
 `int tabsize;`
 
@@ -152,6 +160,16 @@ Below is a list of stripped headers for quick reference
 
 `bool escape(int c);`
 
+`bool bracketLeft(char c);`
+
+`bool bracketRight(char c);`
+
+`bool bracket(char c);`
+
+`char bracketize(char b);`
+
+`bool valid(int c);`
+
 ## `Line` Class
 
 `Line(std::string str, int tab);`
@@ -161,6 +179,10 @@ Below is a list of stripped headers for quick reference
 `std::string get();`
 
 `std::string getRaw();`
+
+`std::string substr(int s);`
+
+`std::string substr(int s, int e);`
 
 `int size();`
 
@@ -194,6 +216,8 @@ Below is a list of stripped headers for quick reference
 
 `void useBuffer(std::shared_ptr<File> f);`
 
+`void useBuffer(std::string fn);`
+
 `std::shared_ptr<File> file;`
 
 `std::shared_ptr<Terminal> term;`
@@ -202,11 +226,15 @@ Below is a list of stripped headers for quick reference
 
 `int curry;`
 
+`int filey;`
+
 `int ruler;`
 
 `int tabsize;`
 
 `bool wordwrap;`
+
+`int encode(std::string s);`
 
 ## `ScreenMaster` Class
 
@@ -264,6 +292,4 @@ Below is a list of stripped headers for quick reference
 
 `WINDOW* window;`
 
-`int x;`
-
-`int y;`
+`int x, y;`
