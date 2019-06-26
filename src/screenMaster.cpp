@@ -15,20 +15,25 @@ ScreenMaster::ScreenMaster(std::shared_ptr<Terminal> t) {
 			}),
 		std::make_shared<Command>(
 			"quit exit q", [=](std::string s) {
-				this->~ScreenMaster(); //calls deconstructor then quits
-				exit(0);
+				if (screens.size()>1) { //calls deconstructor then quits
+					screens.erase(screens.begin()+currentscr);
+
+					if (currentscr>=(int)screens.size()) currentscr--;
+				}
+				else {
+					this->~ScreenMaster();
+					exit(0);
+				}
 			}),
 		std::make_shared<Command>( //save under same name then exit
 			"quitsave exitsave qs", [=](std::string s) {
 				screen()->file->save();
-				this->~ScreenMaster();
-				exit(0);
+				this->commands->run("quit");
 			}),
 		std::make_shared<Command>( //save under different name then exit
 			"quitas exitas qa", [=](std::string s) {
 				screen()->file->saveas(s);
-				this->~ScreenMaster();
-				exit(0);
+				this->commands->run("quit");
 			}),
 		std::make_shared<Command>( //open another file in same buffer
 			"open o", [=](std::string s) {
