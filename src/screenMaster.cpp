@@ -66,10 +66,7 @@ ScreenMaster::ScreenMaster(std::shared_ptr<Terminal> t) {
 			}),
 		std::make_shared<Command>( //move over N tabs
 			"macronew mn", [=]() {
-				term->move(0, 0);
-				term->write(std::string(term->getx(), ' '));
-				term->move(0, 0);
-				term->write("RECORDING");
+				term->zero(0, "RECORDING");
 
 				std::vector<int> keys;
 				int current=getch();
@@ -127,10 +124,8 @@ void ScreenMaster::super() {
 
 	screen()->render(0, 1); //move all lines down one
 
-	term->move(0, 0);
 	attron(COLOR_PAIR(3));
-	term->write(std::string(term->getx(), ' ')); //fill line with white space
-	term->move(0, 0);
+	term->clear(0);
 
 	//print file info until a key is pressed
 	term->write(" ");
@@ -149,9 +144,7 @@ void ScreenMaster::super() {
 	term->write(std::string(term->getx(), ' ')); //fill line with white space
 
 	while (!key::escape(c)&&!key::enter(c)) {
-		term->move(0, 0); //goto start of line
-		term->write(std::string(term->getx(), ' ')); //fill line with white space
-		term->move(0, 0); //go back to start of line
+		term->clear(0);
 
 		superParse(c); //parse key press
 		term->write(superLine->get()); //write line

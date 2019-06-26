@@ -18,6 +18,17 @@ void Terminal::write(std::string s) {
 	addstr(s.c_str());
 }
 
+void Terminal::clear(int y) {
+	move(0, y); //goto start of line
+	write(std::string(getx(), ' ')); //fill line with white space
+	move(0, y); //go back to start of line
+}
+
+void Terminal::zero(int y, std::string s) {
+	clear(y);
+	write(s);
+}
+
 void Terminal::update() {
 	getmaxyx(window, y, x);
 }

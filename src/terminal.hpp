@@ -12,6 +12,8 @@ public:
 	Terminal(); //creates the terminal instance
 
 	void write(std::string s); //writes a string to the screen
+	void clear(int y); //clear line "y"
+	void zero(int y, std::string s); //clear line "y" and write "s"
 
 	void update(); //updates x and y of terminal
 
