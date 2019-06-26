@@ -36,6 +36,8 @@ private:
 	std::fstream stream; //stream is here as it can be used when reading and writing
 	std::vector<std::shared_ptr<Line>> buffer; //contains the lines of the file
 
+	bool eol=false; //add extra eol (newline) after file is written
+
 	int tabsize=4; //overriden when initiated
 };
 

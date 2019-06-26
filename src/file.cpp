@@ -95,9 +95,16 @@ void File::saveas(std::string fn) {
 
 	stream.open(fn, std::ios::out);
 
-	for (auto i:buffer) {
-		stream << i->getRaw() << "\n";
+	for (int i=0;i<(int)buffer.size();i++) {
+		stream << buffer[i]->getRaw();
+
+		//add newlines to all lines except for last line
+		if (i<(int)buffer.size()-1) {
+			stream << "\n";
+		}
 	}
+	//if last line isnt empty and eol is true, and another newline
+	if (eol&&buffer[buffer.size()-1]->getRaw()!="") stream << "\n";
 
 	stream.close();
 }
