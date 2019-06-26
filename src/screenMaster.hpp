@@ -35,7 +35,6 @@ private:
 	std::shared_ptr<Line> superLine; //stores line for super mode
 
 	int superx=0; //x position of cursor when in super mode
-	bool isSuper=false; //whether or not super is active
 
 	int tabsize=4;
 

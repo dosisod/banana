@@ -116,8 +116,6 @@ void ScreenMaster::pause() {
 }
 
 void ScreenMaster::super() {
-	isSuper=true;
-
 	//clear from last time super was active
 	superx=0;
 	superLine=std::make_shared<Line>("", tabsize);
@@ -153,8 +151,6 @@ void ScreenMaster::super() {
 		c=getch();
 	}
 	if (key::enter(c)) commands->run(superLine->getRaw());
-
-	isSuper=false;
 }
 
 void ScreenMaster::superParse(int c) {
