@@ -39,6 +39,8 @@ private:
 	int tabsize=4;
 
 	std::shared_ptr<Commander> commands; //pointer for storing the commander
+
+	std::vector<int> mn_keys; //stores keys used by the "macronew" command
 };
 
 #endif

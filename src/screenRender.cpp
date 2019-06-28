@@ -41,4 +41,5 @@ void Screen::render(int fy, int ty) {
 		}
 	}
 	setxy(tmpx, tmpy); //move back to where the cursor was before
+	term->move(currx+ruler+1, curry+ty); //move relative to the "ty" offset
 }

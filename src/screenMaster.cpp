@@ -68,15 +68,24 @@ ScreenMaster::ScreenMaster(std::shared_ptr<Terminal> t) {
 			"macronew mn", [=]() {
 				term->zero(0, "RECORDING");
 
-				std::vector<int> keys;
+				mn_keys.clear();
 				int current=getch();
 
-				while (!(key::enter(current)||key::escape(current))) {
-					keys.emplace_back(current);
+				while (!key::escape(current)) {
+					mn_keys.emplace_back(current);
 					current=getch();
 				}
+			}),
+		std::make_shared<Command>( //move over N tabs
+			"macroreplay mr", [=]() {
+				term->zero(0, "REPLAYING");
 
-				screen()->parseKeys(keys);
+				int current;
+				do {
+					screen()->parseKeys(mn_keys);
+					screen()->render(0, 1);
+					current=getch();
+				} while (key::enter(current));
 			})
 		})
 	);
