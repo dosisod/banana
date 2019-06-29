@@ -20,6 +20,8 @@ public:
 	//insert char c at line y, over x places, return modified line
 	std::string insert(int c, int x, int y);
 
+	int decode(int x, int y); //convert cursor "x" on line "y" into string length
+
 	void newline(int x, int y); //insert newline at given xy
 	void delline(int y); //delete line if backspace is hit at start of line
 

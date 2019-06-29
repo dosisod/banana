@@ -76,7 +76,7 @@ void Screen::parseKey(int c) {
 			int tmpx=currx;
 
 			setxy(0, curry);
-			term->write(file->insert(c, tmpx, curry+filey));
+			term->write(file->insert(c, file->decode(tmpx, curry), curry+filey));
 
 			if (key::backspace(c)) {
 				setxy(tmpx-1, curry);
@@ -85,7 +85,7 @@ void Screen::parseKey(int c) {
 				setxy(0, curry);
 
 				//insert closing bracket
-				term->write(file->insert(key::bracketize(c), tmpx+1, curry+filey));
+				term->write(file->insert(key::bracketize(c), file->decode(tmpx+1, curry), curry+filey));
 
 				//then move back one
 				setxy(tmpx+1, curry);

@@ -46,8 +46,6 @@ int Line::size() {
 }
 
 std::string Line::insert(int c, int x) {
-	x=decode(x);
-
 	if (key::backspace(c)) {
 		if (x!=0) str=str.substr(0, x-1)+str.substr(x);
 	}

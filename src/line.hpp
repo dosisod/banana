@@ -17,10 +17,10 @@ public:
 
 	int size(); //returns size of get()
 
+	int decode(int x); //find where the cursor really is in the string
+
 private:
 	std::string str; //string containing line data
-
-	int decode(int x); //find where the cursor really is in the string
 
 	int tabsize=4; //tabs are rendered as N spaces, and but will still be tabs after saving
 };

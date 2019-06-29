@@ -44,6 +44,10 @@ std::string File::insert(int c, int x, int y) {
 	return buffer[y]->insert(c, x);
 }
 
+int File::decode(int x, int y) {
+	return buffer[y]->decode(x);
+}
+
 void File::newline(int x, int y) {
 	//used to insert a new line buffer
 	std::vector<std::shared_ptr<Line>>::iterator it=buffer.begin();
