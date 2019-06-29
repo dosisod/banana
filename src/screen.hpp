@@ -27,6 +27,9 @@ public:
 	void setxy(int x, int y);
 	void delta(int dx, int dy); //move cursor relative to current pos
 
+	char charCurrent(); //get char at cursor position
+	char charOver(int x, int y); //get char relative from current cursor pos
+
 	void useBuffer(std::shared_ptr<File> f); //switch which buffer to use
 	void useBuffer(std::string fn); //switch buffer using filename
 

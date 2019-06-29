@@ -39,3 +39,21 @@ void Screen::setxy(int x, int y) {
 void Screen::delta(int dx, int dy) {
 	setxy(dx+currx, dy+curry);
 }
+
+char Screen::charCurrent() {
+	return charOver(0, 0);
+}
+
+char Screen::charOver(int x, int y) {
+	if ((curry+y)>=0&&(curry+y)<file->lines()) {
+		int decoded=file->decode(currx+x, curry+y);
+
+		if ((decoded)>=0&&(decoded)<file->linesize(curry+y)) {
+			//cursor pos is OK
+
+			return file->rawLine(curry+y)[decoded];
+		}
+		return 0;
+	}
+	return 0;
+}
