@@ -56,20 +56,25 @@ std::string Line::insert(int c, int x) {
 }
 
 int Line::decode(int x) {
-	int counter=0; //number of characters needed to display (eg tabs)
+	if (str.length()==0) return 0;
 
+	int counter=0;
 	int i=0;
 	for (;i<(int)str.length();i++) {
-		if (str[i]=='\t') { //calculate how much space the tab takes up
-			int tmp;
-			if (counter%4==0) tmp=tabsize;
-			else tmp=tabsize-((counter)%4);
+		if (counter>x) return i-1; //over calculated position, return last index
+		if (counter==x) return i; //calculated exactly
 
-			counter+=tmp-1;
+		if (str[i]=='\t') {
+			int tmp=tabsize-(counter%tabsize); //calculate tab size
+			if (counter<x&&x<(counter+tmp)) { //if cursor is between a tab, return index of tab
+				return i+1;
+			}
+			else if (tmp==0) counter+=tabsize; //if tab space is 0 add a whole new tab
+			else counter+=tmp;
 		}
-		if (counter>=x) return i; //keep counting untill the correct character is found
-
-		counter++;
+		else {
+			counter++; //normal character just add one
+		}
 	}
 	return i;
 }
