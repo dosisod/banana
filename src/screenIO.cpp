@@ -57,6 +57,17 @@ void Screen::parseKey(int c) {
 
 		//update ruler to account for newlines
 		ruler=std::log10(file->lines())+1;
+
+		//if cursor is between 2 matching brackets when enter is pressed, auto indent
+		std::string lastline=file->rawLine(curry-1);
+		if (key::bracketRight(charCurrent())&&key::bracketLeft(lastline[lastline.length()-1])) {
+			parseKeys(std::vector<int>{
+				KEY_UP,
+				KEY_END,
+				KEY_ENTER,
+				'\t'
+			});
+		}
 	}
 	//backspace is pressed at the start of a line
 	else if (key::backspace(c)&&currx==0&&(curry+filey)!=0) {
