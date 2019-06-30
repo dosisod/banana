@@ -80,14 +80,14 @@ void Screen::parseKey(int c) {
 	}
 	else if (key::valid(c)) {
 		//only move cursor when a closing bracket is pressed next to a closed bracket
-		if (key::bracketRight(c)&&file->rawLine(curry)[file->decode(currx, curry)]==c) {
+		if (key::bracketRight(c)&&file->rawLine(curry)[decode()]==c) {
 			setxy(currx+1, curry);
 		}
 		else {
 			int tmpx=currx;
 
 			setxy(0, curry);
-			term->write(file->insert(c, file->decode(tmpx, curry), curry+filey));
+			term->write(file->insert(c, decode(tmpx, curry), curry+filey));
 
 			if (key::backspace(c)) {
 				setxy(tmpx-1, curry);
@@ -96,7 +96,7 @@ void Screen::parseKey(int c) {
 				setxy(0, curry);
 
 				//insert closing bracket
-				term->write(file->insert(key::bracketize(c), file->decode(tmpx+1, curry), curry+filey));
+				term->write(file->insert(key::bracketize(c), decode(tmpx+1, curry), curry+filey));
 
 				//then move back one
 				setxy(tmpx+1, curry);
@@ -127,6 +127,14 @@ void Screen::useBuffer(std::shared_ptr<File> f) {
 
 void Screen::useBuffer(std::string fn) {
 	useBuffer(std::make_shared<File>(fn, tabsize));
+}
+
+int Screen::decode() {
+	return decode(currx, curry);
+}
+
+int Screen::decode(int x, int y) {
+	return file->decode(x, y);
 }
 
 int Screen::encode(std::string str) {

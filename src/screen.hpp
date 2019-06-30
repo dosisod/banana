@@ -49,6 +49,8 @@ private:
 
 	bool wordwrap=false; //whether or not to wrap text
 
+	int decode(); //returns current position decoded
+	int decode(int x, int y); //calls file decode
 	int encode(std::string s); //find what the cursor position should be for a given string
 };
 

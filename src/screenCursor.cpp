@@ -47,7 +47,7 @@ char Screen::charCurrent() {
 char Screen::charOver(int x, int y) {
 	x--; //cursor is over one relative to string pos
 	if ((curry+y)>=0&&(curry+y)<file->lines()) {
-		int decoded=file->decode(currx+x, curry+y);
+		int decoded=decode(currx+x, curry+y);
 
 		if ((decoded)>=0&&(decoded)<file->linesize(curry+y)) {
 			//cursor pos is OK
