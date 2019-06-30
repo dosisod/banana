@@ -28,6 +28,7 @@ public:
 	void delta(int dx, int dy); //move cursor relative to current pos
 
 	char charCurrent(); //get char at cursor position
+	char charAt(int x, int y);
 	char charOver(int x, int y); //get char relative from current cursor pos
 
 	void useBuffer(std::shared_ptr<File> f); //switch which buffer to use
