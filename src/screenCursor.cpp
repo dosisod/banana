@@ -41,7 +41,7 @@ void Screen::delta(int dx, int dy) {
 }
 
 char Screen::charCurrent() {
-	return charOver(0, 0);
+	return charOver(0, 0+filey);
 }
 
 char Screen::charAt(int x, int y) {

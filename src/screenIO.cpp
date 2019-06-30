@@ -59,7 +59,7 @@ void Screen::parseKey(int c) {
 		ruler=std::log10(file->lines())+1;
 
 		//if cursor is between 2 matching brackets when enter is pressed, auto indent
-		std::string lastline=file->rawLine(curry-1);
+		std::string lastline=file->rawLine(curry+filey-1);
 		if (key::bracketRight(charCurrent())&&key::bracketLeft(lastline[lastline.length()-1])) {
 			parseKeys(std::vector<int>{
 				KEY_UP,
@@ -80,14 +80,14 @@ void Screen::parseKey(int c) {
 	}
 	else if (key::valid(c)) {
 		//only move cursor when a closing bracket is pressed next to a closed bracket
-		if (key::bracketRight(c)&&file->rawLine(curry)[decode()]==c) {
+		if (key::bracketRight(c)&&charAt(currx, curry+filey)==c) {
 			setxy(currx+1, curry);
 		}
 		else {
 			int tmpx=currx;
 
 			setxy(0, curry);
-			term->write(file->insert(c, decode(tmpx, curry), curry+filey));
+			term->write(file->insert(c, decode(tmpx, curry+filey), curry+filey));
 
 			if (key::backspace(c)) {
 				setxy(tmpx-1, curry);
@@ -96,7 +96,7 @@ void Screen::parseKey(int c) {
 				setxy(0, curry);
 
 				//insert closing bracket
-				term->write(file->insert(key::bracketize(c), decode(tmpx+1, curry), curry+filey));
+				term->write(file->insert(key::bracketize(c), decode(tmpx+1, curry+filey), curry+filey));
 
 				//then move back one
 				setxy(tmpx+1, curry);
