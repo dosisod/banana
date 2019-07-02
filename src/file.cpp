@@ -44,6 +44,11 @@ std::string File::insert(int c, int x, int y) {
 	return buffer[y]->insert(c, x);
 }
 
+std::string File::insert(std::string s, int x, int y) {
+	//insert string s at x pos then return it
+	return buffer[y]->insert(s, x);
+}
+
 int File::decode(int x, int y) {
 	return buffer[y]->decode(x);
 }

@@ -9,6 +9,7 @@ public:
 	Line(std::string str, int tab);
 
 	std::string insert(int c, int x);
+	std::string insert(std::string s, int x);
 
 	std::string get(); //gets tab-parsed string
 	std::string getRaw(); //returns raw string

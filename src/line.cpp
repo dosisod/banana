@@ -55,6 +55,16 @@ std::string Line::insert(int c, int x) {
 	return get(); //return the parsed version
 }
 
+std::string Line::insert(std::string s, int x) {
+	for (auto i:str) {
+		if (!key::valid(i)||key::backspace(i)||key::enter(i)) return "";
+	}
+
+	str=str.substr(0, x)+s+str.substr(x);
+
+	return get();
+}
+
 int Line::decode(int x) {
 	if (str.length()==0) return 0;
 

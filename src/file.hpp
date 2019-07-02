@@ -19,6 +19,7 @@ public:
 
 	//insert char c at line y, over x places, return modified line
 	std::string insert(int c, int x, int y);
+	std::string insert(std::string s, int x, int y);
 
 	int decode(int x, int y); //convert cursor "x" on line "y" into string length
 
