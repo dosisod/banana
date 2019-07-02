@@ -36,11 +36,11 @@ public:
 
 	std::shared_ptr<File> file; //stores the file buffer
 
-private:
-	std::shared_ptr<Terminal> term; //stores common terminal object
-
 	int currx=0;
 	int curry=0; //current xy of cursor
+
+private:
+	std::shared_ptr<Terminal> term; //stores common terminal object
 
 	int filey=0; //terminal renders file lines starting from this point
 
