@@ -19,13 +19,14 @@ public:
 
 	void move(int x, int y); //move to raw position x y
 
-	int getx() { return x; } //return x and y of screen
-	int gety() { return y; } //
+	int getx(); //return x and y of screen
+	int gety(); //
 
 private:
 	WINDOW* window;
 
-	int x, y; //x and y dimension of terminal
+	int x; //x and y dimension of terminal
+	int y; //
 };
 
 #endif

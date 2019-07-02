@@ -13,11 +13,6 @@ Screen::Screen(std::shared_ptr<Terminal> t, int tab) {
 	tabsize=tab;
 
 	refresh();
-
-	//setup colors
-	init_pair(1, COLOR_BLACK, COLOR_YELLOW);
-	init_pair(2, COLOR_WHITE, COLOR_BLACK);
-	init_pair(3, COLOR_BLACK, COLOR_WHITE);
 }
 
 Screen::~Screen() {
