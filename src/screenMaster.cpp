@@ -64,7 +64,7 @@ ScreenMaster::ScreenMaster(std::shared_ptr<Terminal> t) {
 				int tab=parsenum(s, screenid());
 				this->commands->run("tab "+std::to_string(screenid()+tab+1));
 			}),
-		std::make_shared<Command>( //move over N tabs
+		std::make_shared<Command>( //records a new macro
 			"macronew mn", [=]() {
 				term->zero(0, "RECORDING");
 
@@ -76,13 +76,36 @@ ScreenMaster::ScreenMaster(std::shared_ptr<Terminal> t) {
 					current=getch();
 				}
 			}),
-		std::make_shared<Command>( //move over N tabs
+		std::make_shared<Command>( //replays stored macro
 			"macroreplay mr", [=]() {
 				term->zero(0, "REPLAYING");
 
 				int current;
 				do {
 					screen()->parseKeys(mn_keys);
+					screen()->render(0, 1);
+					current=getch();
+				} while (key::enter(current));
+			}),
+		std::make_shared<Command>( //duplicate current line
+			"duplicate dupe d", [=]() {
+				term->zero(0, "DUPLICATING");
+
+				int current;
+				std::string line=screen()->file->rawLine(screen()->curry);
+
+				do {
+					screen()->file->newline(
+						line.length(),
+						screen()->curry
+					);
+
+					screen()->file->insert(
+						line,
+						0,
+						screen()->curry+1
+					);
+
 					screen()->render(0, 1);
 					current=getch();
 				} while (key::enter(current));
