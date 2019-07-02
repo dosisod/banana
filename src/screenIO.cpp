@@ -52,8 +52,8 @@ void Screen::parseKey(int c) {
 		setxy(0, curry);
 	}
 	else if (key::enter(c)) {
-		file->newline(currx, curry+filey);
-		setxy(encode(file->line(curry+filey)), curry+1);
+		file->newline(currx, curry+filey); //split line at cursor position
+		setxy(encode(file->line(curry+filey)), curry+1); //move cursor to new pposition
 
 		//update ruler to account for newlines
 		ruler=std::log10(file->lines())+1;
@@ -83,13 +83,13 @@ void Screen::parseKey(int c) {
 		if (key::bracketRight(c)&&charAt(currx, curry+filey)==c) {
 			setxy(currx+1, curry);
 		}
-		else {
+		else { //normal character was pressed
 			int tmpx=currx;
 
 			setxy(0, curry);
 			term->write(file->insert(c, decode(tmpx, curry+filey), curry+filey));
 
-			if (key::backspace(c)) {
+			if (key::backspace(c)) { //move cursor back
 				setxy(tmpx-1, curry);
 			}
 			else if (key::bracketLeft(c)) {

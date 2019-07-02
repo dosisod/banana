@@ -72,7 +72,7 @@ ScreenMaster::ScreenMaster(std::shared_ptr<Terminal> t) {
 				int current=getch();
 
 				while (!key::escape(current)) {
-					mn_keys.emplace_back(current);
+					mn_keys.emplace_back(current); //keep adding characters until escape is pressed
 					current=getch();
 				}
 			}),
@@ -95,12 +95,12 @@ ScreenMaster::ScreenMaster(std::shared_ptr<Terminal> t) {
 				std::string line=screen()->file->rawLine(screen()->curry);
 
 				do {
-					screen()->file->newline(
+					screen()->file->newline( //add blank line under current line
 						line.length(),
 						screen()->curry
 					);
 
-					screen()->file->insert(
+					screen()->file->insert( //duplicate line above into blank space
 						line,
 						0,
 						screen()->curry+1

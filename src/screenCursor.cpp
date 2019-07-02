@@ -7,10 +7,12 @@ void Screen::home() {
 }
 
 void Screen::setxy(int x, int y) {
+	//cursor is above screen, move file offset up
 	if (y==-1&&filey>0) {
 		filey--;
 		return;
 	}
+	//if cursor is below the screen, move file offset down
 	else if (y==term->gety()&&(curry+filey)<file->lines()) {
 		if ((filey+curry+1)<file->lines()) filey++;
 		return;
