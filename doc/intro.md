@@ -92,7 +92,7 @@ Below is a list of stripped headers for quick reference
 
 `Command(std::string c, std::function<void(std::string)> f);`
 
-`Command(std::string c, std::function<void(void)> f);`
+`Command(std::string c, std::function<void()> f);`
 
 `bool check(std::string s);`
 
@@ -115,6 +115,10 @@ Below is a list of stripped headers for quick reference
 `int linesize(int n);`
 
 `std::string insert(int c, int x, int y);`
+
+`std::string insert(std::string s, int x, int y);`
+
+`int decode(int x, int y);`
 
 `void newline(int x, int y);`
 
@@ -176,6 +180,8 @@ Below is a list of stripped headers for quick reference
 
 `std::string insert(int c, int x);`
 
+`std::string insert(std::string s, int x);`
+
 `std::string get();`
 
 `std::string getRaw();`
@@ -186,9 +192,9 @@ Below is a list of stripped headers for quick reference
 
 `int size();`
 
-`std::string str;`
-
 `int decode(int x);`
+
+`std::string str;`
 
 `int tabsize;`
 
@@ -214,17 +220,25 @@ Below is a list of stripped headers for quick reference
 
 `void delta(int dx, int dy);`
 
+`char charCurrent();`
+
+`char charAt(int x, int y);`
+
+`char charOver(int x, int y);`
+
 `void useBuffer(std::shared_ptr<File> f);`
 
 `void useBuffer(std::string fn);`
 
 `std::shared_ptr<File> file;`
 
-`std::shared_ptr<Terminal> term;`
-
 `int currx;`
 
 `int curry;`
+
+`int realy();`
+
+`std::shared_ptr<Terminal> term;`
 
 `int filey;`
 
@@ -233,6 +247,10 @@ Below is a list of stripped headers for quick reference
 `int tabsize;`
 
 `bool wordwrap;`
+
+`int decode();`
+
+`int decode(int x, int y);`
 
 `int encode(std::string s);`
 
@@ -270,17 +288,21 @@ Below is a list of stripped headers for quick reference
 
 `int superx;`
 
-`bool isSuper;`
-
 `int tabsize;`
 
 `std::shared_ptr<Commander> commands;`
+
+`std::vector<int> mn_keys;`
 
 ## `Terminal` Class
 
 `Terminal();`
 
 `void write(std::string s);`
+
+`void clear(int y);`
+
+`void zero(int y, std::string s);`
 
 `void update();`
 
@@ -292,4 +314,6 @@ Below is a list of stripped headers for quick reference
 
 `WINDOW* window;`
 
-`int x, y;`
+`int x;`
+
+`int y;`
