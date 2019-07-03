@@ -13,8 +13,8 @@ void Screen::setxy(int x, int y) {
 		return;
 	}
 	//if cursor is below the screen, move file offset down
-	else if (y==term->gety()&&(curry+filey)<file->lines()) {
-		if ((filey+curry+1)<file->lines()) filey++;
+	else if (y==term->gety()&&realy()<file->lines()) {
+		if (realy()+1<file->lines()) filey++;
 		return;
 	}
 
@@ -62,4 +62,8 @@ char Screen::charOver(int x, int y) {
 		return 0;
 	}
 	return 0;
+}
+
+int Screen::realy() {
+	return curry+filey;
 }

@@ -39,6 +39,8 @@ public:
 	int currx=0;
 	int curry=0; //current xy of cursor
 
+	int realy(); //curry + filey
+
 private:
 	std::shared_ptr<Terminal> term; //stores common terminal object
 
