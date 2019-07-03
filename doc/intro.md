@@ -30,7 +30,7 @@ ScreenMaster
 | | | Lines //vector of type line
 ```
 
-For a complete list of headers, click [here][headers.md]
+For a complete list of headers, click [here](headers.md)
 
 `ScreenMaster` controls the virtual `Screen`s, data going from the user, commands, and data being displayed to the physical screen
 
