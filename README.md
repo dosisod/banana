@@ -2,6 +2,10 @@
 
 banana: Slim terminal text-editor
 
+[banana-in-use](/doc/banana.png)
+
+[An introduction to banana](/doc/intro.md)
+
 ## Installing
 
 Compile using:
