@@ -43,7 +43,7 @@ void Screen::delta(int dx, int dy) {
 }
 
 char Screen::charCurrent() {
-	return charOver(0, 0+filey);
+	return charOver(0, 0);
 }
 
 char Screen::charAt(int x, int y) {
@@ -52,12 +52,12 @@ char Screen::charAt(int x, int y) {
 
 char Screen::charOver(int x, int y) {
 	x--; //cursor is over one relative to string pos
-	if ((curry+y)>=0&&(curry+y)<file->lines()) {
-		int decoded=decode(currx+x, curry+y);
+	if (realy()+y>=0&&realy()+y<file->lines()) {
+		int decoded=decode(currx+x, realy()+y);
 
-		if ((decoded)>=0&&(decoded)<file->linesize(curry+y)) {
+		if (decoded>=0&&decoded<file->linesize(realy()+y)) {
 			//cursor pos is OK
-			return charAt(currx+x, curry+y);
+			return charAt(currx+x, realy()+y);
 		}
 		return 0;
 	}

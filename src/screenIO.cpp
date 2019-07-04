@@ -83,6 +83,13 @@ void Screen::parseKey(int c) {
 		if (key::bracketRight(c)&&charAt(currx, curry+filey)==c) {
 			setxy(currx+1, curry);
 		}
+		else if (key::bracketRight(charOver(1, 0))&&key::backspace(c)&&key::bracketLeft(charCurrent())) {
+			parseKeys(std::vector<int>{
+				KEY_RIGHT,
+				KEY_BACKSPACE,
+				KEY_BACKSPACE
+			});
+		}
 		else { //normal character was pressed
 			int tmpx=currx;
 
