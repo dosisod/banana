@@ -10,19 +10,21 @@ void Screen::pause() {
 }
 
 void Screen::parseKey(int c) {
-	if (key::del(c)) { //convert delete into a backspace
-		currx++; //move over as if it was a backspace
+	if (key::del(c)) { //fake the delete key by moving the cursor right and pressing backspace
+		int tmpy=curry;
+		int tmpx=currx;
+		parseKey(KEY_RIGHT);
 
-		if (currx>=file->linesize(curry+filey)&&(curry+filey+2)>file->lines()) {
-			return;
-		}
-		else if (currx>file->linesize(curry+filey)) {
-			if (file->lines()>1) {
-				setxy(0, curry+1);
-			}
-			else return;
-		}
-		parseKey(KEY_BACKSPACE);
+		if (tmpy==curry&&file->linesize(realy())==0) return;
+
+		//if not at eol, not at the same line, or the current line is only one character, backspace
+		if (
+			currx<file->linesize(realy())||
+			(file->lines()!=1&&file->linesize(realy())!=1)||
+			tmpx!=currx||
+			tmpy!=curry
+		) parseKey(KEY_BACKSPACE);
+
 		return;
 	}
 	else if (key::up(c)) {
@@ -40,10 +42,10 @@ void Screen::parseKey(int c) {
 	}
 	else if (key::right(c)) {
 		//right was pressed at the end of a line
-		if (currx==(int)file->linesize(curry+filey)&&(curry+filey)<file->lines()) setxy(0, curry+1);
-
-		//right was pressed somewhere else
-		else delta(1, 0);
+		if (currx==file->linesize(realy())&&realy()+1<file->lines()) {
+			setxy(0, curry+1);
+		}
+		else delta(1, 0); //right was pressed somewhere else
 	}
 	else if (key::end(c)) {
 		setxy(file->linesize(curry+filey), curry);
