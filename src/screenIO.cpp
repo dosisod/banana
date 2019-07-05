@@ -20,7 +20,6 @@ void Screen::parseKey(int c) {
 		//if not at eol, not at the same line, or the current line is only one character, backspace
 		if (
 			currx<file->linesize(realy())||
-			(file->lines()!=1&&file->linesize(realy())!=1)||
 			tmpx!=currx||
 			tmpy!=curry
 		) parseKey(KEY_BACKSPACE);
