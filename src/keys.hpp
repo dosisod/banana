@@ -12,6 +12,8 @@ namespace key {
 	bool end(int c);
 	bool up(int c);
 	bool down(int c);
+	bool pageup(int c);
+	bool pagedown(int c);
 	bool left(int c);
 	bool right(int c);
 	bool escape(int c);

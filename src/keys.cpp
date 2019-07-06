@@ -8,6 +8,8 @@ namespace key {
 	bool end(int c) { return c==KEY_END; }
 	bool up(int c) { return c==KEY_UP; }
 	bool down(int c) { return c==KEY_DOWN; }
+	bool pageup(int c) { return c==KEY_PPAGE; }
+	bool pagedown(int c) { return c==KEY_NPAGE; }
 	bool left(int c) { return c==KEY_LEFT; }
 	bool right(int c) { return c==KEY_RIGHT; }
 	bool escape(int c) { return c==27; }
@@ -37,7 +39,9 @@ namespace key {
 			del(c)||
 			end(c)||
 			up(c)||
+			pageup(c)||
 			down(c)||
+			pagedown(c)||
 			left(c)||
 			right(c)||
 			escape(c)
