@@ -24,15 +24,16 @@ void Screen::setxy(int x, int y) {
 		}
 		return;
 	}
-	//couldnt move down but the botton line is visible in the terminal
-	else if (y+filey>file->lines()&&file->lines()-filey<term->gety()) {
-		curry=file->lines()-filey-1;
-		return;
-	}
-	//when moving the bottom of the file was reached, so move lastline to bottom of screen
-	else if (filey+y>=file->lines()&&file->lines()-filey>=term->gety()) {
-		curry=term->gety()-1;
-		filey=file->lines()-term->gety();
+	else if (y+filey>=file->lines()) {
+		//couldnt move down but the botton line is visible in the terminal
+		if (file->lines()-filey<term->gety()) {
+			curry=file->lines()-filey-1;
+		}
+		//when moving the bottom of the file was reached, so move lastline to bottom of screen
+		else {
+			curry=term->gety()-1;
+			filey=file->lines()-term->gety();
+		}
 		return;
 	}
 	//cursor moved past bottom of screen but didnt hit last line, move file offset
