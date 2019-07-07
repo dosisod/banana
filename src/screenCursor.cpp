@@ -9,30 +9,42 @@ void Screen::home() {
 void Screen::setxy(int x, int y) {
 	int diffx=x-currx;
 	int diffy=y-curry;
-	//cursor is above screen, move file offset up
 
+	//cursor is above screen, move file offset up
 	if (y<0) {
-		if (filey<=0) {
+		if (filey<=0) { //file offset is as far up as it can go
 			curry=0;
 		}
-		else if (filey>-diffy) {
+		else if (filey>-diffy) { //there is room to move the file offset up
 			filey+=diffy;
 		}
-		else {
+		else { //there is no room to move
 			filey=0;
 			curry=0;
 		}
 		return;
 	}
-
-	//if cursor is below the screen, move file offset down
-	if (y==term->gety()&&realy()<file->lines()) {
-		if (realy()+1<file->lines()) filey++;
+	//couldnt move down but the botton line is visible in the terminal
+	else if (y+filey>file->lines()&&file->lines()-filey<term->gety()) {
+		curry=file->lines()-filey-1;
+		return;
+	}
+	//when moving the bottom of the file was reached, so move lastline to bottom of screen
+	else if (filey+y>=file->lines()&&file->lines()-filey>=term->gety()) {
+		curry=term->gety()-1;
+		filey=file->lines()-term->gety();
+		return;
+	}
+	//cursor moved past bottom of screen but didnt hit last line, move file offset
+	else if (filey+y<file->lines()&&y>=term->gety()&&file->lines()-filey>=term->gety()) {
+		curry=term->gety()-1;
+		filey+=y-term->gety()+1;
 		return;
 	}
 
 	//must be checked first or file->line(-1) could happen
-	if (y<0||y>=file->lines()) return;
+	if (y<0) y=0;
+	else if (y>=file->lines()) y=file->lines()-1;
 
 	//prevents cursor getting stuck when going to a shorter line
 	if (x>(file->linesize(y+filey))) {
