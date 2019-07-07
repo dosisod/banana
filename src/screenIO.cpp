@@ -29,8 +29,14 @@ void Screen::parseKey(int c) {
 	else if (key::up(c)) {
 		delta(0, -1);
 	}
+	else if (key::pageup(c)) {
+		delta(0, -page);
+	}
 	else if (key::down(c)) {
 		delta(0, 1);
+	}
+	else if (key::pagedown(c)) {
+		delta(0, page);
 	}
 	else if (key::left(c)) {
 		//left was pressed while at the start of a line
