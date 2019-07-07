@@ -45,6 +45,7 @@ private:
 	std::shared_ptr<Terminal> term; //stores common terminal object
 
 	int filey=0; //terminal renders file lines starting from this point
+	int page=10; //page up/down will move by N lines at a time
 
 	int ruler; //defined from file
 

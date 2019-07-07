@@ -7,13 +7,26 @@ void Screen::home() {
 }
 
 void Screen::setxy(int x, int y) {
+	int diffx=x-currx;
+	int diffy=y-curry;
 	//cursor is above screen, move file offset up
-	if (y==-1&&filey>0) {
-		filey--;
+
+	if (y<0) {
+		if (filey<=0) {
+			curry=0;
+		}
+		else if (filey>-diffy) {
+			filey+=diffy;
+		}
+		else {
+			filey=0;
+			curry=0;
+		}
 		return;
 	}
+
 	//if cursor is below the screen, move file offset down
-	else if (y==term->gety()&&realy()<file->lines()) {
+	if (y==term->gety()&&realy()<file->lines()) {
 		if (realy()+1<file->lines()) filey++;
 		return;
 	}
