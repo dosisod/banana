@@ -61,7 +61,8 @@ void Screen::setxy(int x, int y) {
 
 	currx=x; //update current position
 	curry=y; //
-	term->move(x+ruler+1, y);
+
+	term->move(decode(x, realy())+ruler+1, y);
 }
 
 void Screen::delta(int dx, int dy) {
