@@ -84,6 +84,10 @@ ScreenMaster::ScreenMaster(std::shared_ptr<Terminal> t) {
 				do {
 					screen()->parseKeys(mn_keys);
 					screen()->render(0, 1);
+
+					attron(COLOR_PAIR(3));
+					term->zero(0, "REPLAYING");
+
 					current=getch();
 				} while (key::enter(current));
 			}),
