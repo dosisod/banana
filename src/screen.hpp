@@ -1,5 +1,4 @@
-#ifndef __SCREEN_HPP__
-#define __SCREEN_HPP__
+#pragma once
 
 #include <ncurses.h>
 #include <vector>
@@ -12,50 +11,61 @@
 
 class Screen {
 public:
-	Screen(std::shared_ptr<Terminal> t, int tab); //create screen instance
-	~Screen(); //close everything nicely
+	Screen(std::shared_ptr<Terminal> terminal, int tabsize);
+	~Screen();
 
 	void pause();
 
-	void parseKey(int c); //parses and interprets key
-	void parseKeys(std::vector<int> c); //parses and interprets an array of keys
+	void parseKey(int c);
+	void parseKeys(std::vector<int> c);
 
-	void render(); //draws state of file to screen
-	void render(int fy, int ty); //render screen starting with file line y at terminal line y
+	void render();
 
-	void home(); //goto home position
+	//render starting with file line "fy" at terminal line "ty"
+	void render(int fy, int ty);
+
+	void home();
 	void setxy(int x, int y);
-	void delta(int dx, int dy); //move cursor relative to current pos
+	void delta(int dx, int dy);
 
-	char charCurrent(); //get char at cursor position
+	char charCurrent();
 	char charAt(int x, int y);
-	char charOver(int x, int y); //get char relative from current cursor pos
+	char charOver(int x, int y);
 
-	void useBuffer(std::shared_ptr<File> f); //switch which buffer to use
-	void useBuffer(std::string fn); //switch buffer using filename
+	//open new file buffer
+	void useBuffer(std::shared_ptr<File> f);
 
-	std::shared_ptr<File> file; //stores the file buffer
+	//replace current buffer with file "fn"
+	void useBuffer(std::string fn);
 
+	std::shared_ptr<File> file;
+
+	//cursor x and y
 	int currx=0;
-	int curry=0; //current xy of cursor
+	int curry=0;
 
-	int realy(); //curry + filey
+	//y position relative to start of file
+	int realy();
 
 private:
-	std::shared_ptr<Terminal> term; //stores common terminal object
+	std::shared_ptr<Terminal> terminal;
 
-	int filey=0; //terminal renders file lines starting from this point
-	int page=10; //page up/down will move by N lines at a time
+	//line in file to start rendering from
+	int filey=0;
 
-	int ruler; //defined from file
+	//page up/down will move by N lines at a time
+	int page=10;
 
-	int tabsize=4; //overriden when initiated
+	int ruler;
+	int tabsize=4;
 
-	bool wordwrap=false; //whether or not to wrap text
+	bool wordwrap=false;
 
-	int decode(); //returns current position decoded
-	int decode(int x, int y); //calls file decode
-	int encode(std::string s); //find what the cursor position should be for a given string
+	//decodes cursor position when there are tabs
+	int decode();
+
+	int decode(int x, int y);
+
+	//find what the cursor position should be for a given string
+	int encode(std::string s);
 };
-
-#endif

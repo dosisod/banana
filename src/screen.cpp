@@ -6,12 +6,10 @@
 #include "screen.hpp"
 #include "keys.hpp"
 
-//This file contains constructor, destructor, and super mode functions
-
-Screen::Screen(std::shared_ptr<Terminal> t, int tab) {
-	term=t; //pass terminal set from main so it can be used
-	tabsize=tab;
-
+Screen::Screen(std::shared_ptr<Terminal> terminal, int tabsize) :
+	terminal(terminal),
+	tabsize(tabsize)
+{
 	refresh();
 }
 

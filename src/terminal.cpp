@@ -3,12 +3,18 @@
 #include "terminal.hpp"
 
 Terminal::Terminal() {
-	setlocale(LC_ALL, ""); //allow for unicode
-	window=initscr(); //init and clear screen
-	start_color();
-	noecho(); //dont print characters to screen
+	//allow for unicode
+	setlocale(LC_ALL, "");
 
-	keypad(window, true); //allows arrow keys to be detected
+	//init and clear screen
+	window=initscr();
+	start_color();
+
+	//dont print characters to screen
+	noecho();
+
+	//allows arrow keys to be detected
+	keypad(window, true);
 	ESCDELAY=0;
 
 	update();
@@ -24,14 +30,18 @@ void Terminal::write(std::string s) {
 }
 
 void Terminal::clear(int y) {
-	move(0, y); //goto start of line
-	write(std::string(getx(), ' ')); //fill line with white space
-	move(0, y); //go back to start of line
+	//goto start of line
+	move(0, y);
+
+	//fill line with white space
+	write(std::string(getx(), ' '));
+
+	move(0, y);
 }
 
-void Terminal::zero(int y, std::string s) {
+void Terminal::zero(int y, std::string str) {
 	clear(y);
-	write(s);
+	write(str);
 }
 
 void Terminal::update() {
@@ -39,7 +49,7 @@ void Terminal::update() {
 }
 
 void Terminal::move(int x, int y) {
-	wmove(window, y, x); //x and y are flipped to make it easier to manage
+	wmove(window, y, x);
 }
 
 int Terminal::getx() {

@@ -5,20 +5,21 @@
 #include "file.hpp"
 #include "line.hpp"
 
-File::File(std::string fn, int tab) {
-	tabsize=tab;
-
-	filename=fn;
+File::File(std::string filename, int tabsize) :
+	filename(filename),
+	tabsize(tabsize)
+{
 	stream.open(filename);
 
 	if (stream.is_open()) {
 		std::string line="";
 		while (std::getline(stream, line)) {
-			buffer.push_back(std::make_shared<Line>(line, tab));
+			buffer.push_back(std::make_shared<Line>(line, tabsize));
 		}
 	}
 	else {
-		buffer.push_back(std::make_shared<Line>("", tab)); //append a single blank file
+		//append a single blank file
+		buffer.push_back(std::make_shared<Line>("", tabsize));
 	}
 	stream.close();
 }
@@ -27,26 +28,26 @@ int File::lines() {
 	return buffer.size();
 }
 
-std::string File::rawLine(int n) {
-	return buffer[n]->getRaw();
+std::string File::rawLine(int lineNum) {
+	return buffer[lineNum]->getRaw();
 }
 
-std::string File::line(int n) {
-	return buffer[n]->get();
+std::string File::line(int lineNum) {
+	return buffer[lineNum]->get();
 }
 
-int File::linesize(int n) {
-	return buffer[n]->size();
+int File::linesize(int lineNum) {
+	return buffer[lineNum]->size();
 }
 
-std::string File::insert(int c, int x, int y) {
+std::string File::insert(int character, int x, int y) {
 	//insert char at x pos then return it
-	return buffer[y]->insert(c, x);
+	return buffer[y]->insert(character, x);
 }
 
-std::string File::insert(std::string s, int x, int y) {
+std::string File::insert(std::string str, int x, int y) {
 	//insert string s at x pos then return it
-	return buffer[y]->insert(s, x);
+	return buffer[y]->insert(str, x);
 }
 
 int File::decode(int x, int y) {
@@ -54,66 +55,74 @@ int File::decode(int x, int y) {
 }
 
 void File::newline(int x, int y) {
-	//used to insert a new line buffer
-	std::vector<std::shared_ptr<Line>>::iterator it=buffer.begin();
+	std::vector<std::shared_ptr<Line>>::iterator iter=buffer.begin();
 
 	std::string indent=getIndent(y);
-	if (x<(int)indent.length()) {
+
+	if (x < (int)indent.length()) {
 		indent=indent.substr(0, x);
 	}
 
 	//add new line
 	buffer.insert(
-		it+y+1,
+		iter + y + 1,
 		std::make_shared<Line>(
-			indent+
-			buffer[y]->substr(x),
+			indent + buffer[y]->substr(x),
 			tabsize
 		)
 	);
 
 	//updates old line
-	buffer[y]=std::make_shared<Line>(buffer[y]->substr(0, x), tabsize);
+	buffer[y]=std::make_shared<Line>(
+		buffer[y]->substr(0, x),
+		tabsize
+	);
 }
 
 void File::delline(int y) {
-	buffer[y-1]=std::make_shared<Line>(buffer[y-1]->getRaw()+buffer[y]->getRaw(), tabsize);
+	buffer[y-1]=std::make_shared<Line>(
+		buffer[y-1]->getRaw() + buffer[y]->getRaw(),
+		tabsize
+	);
 
 	//remove line that cursor was
-	buffer.erase(buffer.begin()+y);
+	buffer.erase(buffer.begin() + y);
 }
 
-std::string File::getIndent(int n) {
-	std::string tmp=rawLine(n);
+std::string File::getIndent(int lineNum) {
+	std::string tmp=rawLine(lineNum);
 	int i=0;
 
-	for (;i<(int)tmp.length();) {
-		if (tmp[i]==' '||tmp[i]=='\t') i++;
+	for (; i < (int)tmp.length() ;) {
+		if (tmp[i]==' ' || tmp[i]=='\t') {
+			i++;
+		}
 		else break;
 	}
 	return tmp.substr(0, i);
 }
-
 
 void File::save() {
 	saveas(filename);
 }
 
 void File::saveas(std::string fn) {
-	filename=fn; //saveas also sets the filename for files saved with "save" later on
+	filename=fn;
 
-	stream.open(fn, std::ios::out);
+	stream.open(filename, std::ios::out);
 
-	for (int i=0;i<(int)buffer.size();i++) {
+	for (int i=0 ; i < (int)buffer.size() ; i++) {
 		stream << buffer[i]->getRaw();
 
 		//add newlines to all lines except for last line
-		if (i<(int)buffer.size()-1) {
+		if (i < (int)buffer.size() - 1) {
 			stream << "\n";
 		}
 	}
-	//if last line isnt empty and eol is true, and another newline
-	if (eol&&buffer[buffer.size()-1]->getRaw()!="") stream << "\n";
+
+	if (eol && buffer[buffer.size() - 1]->getRaw() != "") {
+		stream << "\n";
+	}
 
 	stream.close();
 }

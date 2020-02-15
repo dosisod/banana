@@ -1,21 +1,21 @@
-#ifndef __COMMANDER_HPP__
-#define __COMMANDER_HPP__
+#pragma once
 
 #include <memory>
 
 #include "command.hpp"
 
-class Commander { //holds all of the commands to be used
+class Commander {
 public:
-	Commander(std::vector<std::shared_ptr<Command>> c);
+	Commander(std::vector<std::shared_ptr<Command>> commands);
 
-	const typedef std::pair<std::string, std::string> params; //for better usability
+	const typedef std::pair<std::string, std::string> params;
 
-	params parse(std::string str); //returns parsed parameters
-	void run(std::string str); //parses and call function accordingly
+	//returns parsed parameters
+	params parse(std::string str);
+
+	//parses and call function accordingly
+	void run(std::string str);
 
 private:
 	std::vector<std::shared_ptr<Command>> commands;
 };
-
-#endif

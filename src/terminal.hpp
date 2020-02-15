@@ -1,5 +1,4 @@
-#ifndef __TERMINAL_HPP__
-#define __TERMINAL_HPP__
+#pragma once
 
 #include <ncurses.h>
 #include <vector>
@@ -9,24 +8,28 @@
 
 class Terminal {
 public:
-	Terminal(); //creates the terminal instance
+	Terminal();
 
-	void write(std::string s); //writes a string to the screen
-	void clear(int y); //clear line "y"
-	void zero(int y, std::string s); //clear line "y" and write "s"
+	void write(std::string str);
 
-	void update(); //updates x and y of terminal
+	void clear(int y);
 
-	void move(int x, int y); //move to raw position x y
+	//clear line "y" and write "str"
+	void zero(int y, std::string str);
 
-	int getx(); //return x and y of screen
-	int gety(); //
+	//updates terminal x and y
+	void update();
+
+	void move(int x, int y);
+
+	//max x and y of terminal
+	int getx();
+	int gety();
 
 private:
 	WINDOW* window;
 
-	int x; //x and y dimension of terminal
-	int y; //
+	//terminal x and y
+	int x;
+	int y;
 };
-
-#endif

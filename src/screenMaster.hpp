@@ -1,5 +1,4 @@
-#ifndef __SCREENMASTER_HPP__
-#define __SCREENMASTER_HPP__
+#pragma once
 
 #include <memory>
 #include <vector>
@@ -9,38 +8,47 @@
 
 class ScreenMaster {
 public:
-	ScreenMaster(std::shared_ptr<Terminal> t);
+	ScreenMaster(std::shared_ptr<Terminal> terminal);
 	~ScreenMaster();
 
-	void addBuffer(std::string s); //adds a new screen buffer using file buffer initializer
+	void addBuffer(std::string s);
 
 	void parseKey(int c);
 
-	void pause(); //pauses screen
+	void pause();
 
-	std::shared_ptr<Screen> operator->(); //all -> functions done to master are passed to current screen
-	std::shared_ptr<Screen> screen(); //get current screen
+	//forward -> calls to current screen
+	std::shared_ptr<Screen> operator->();
 
-	int screenid(); //returns the id of the current screen
-	int parsenum(std::string s, int d); //parse "s" into number, if error return d
+	std::shared_ptr<Screen> screen();
+
+	int screenid();
+
+	int parsenum(std::string str, int fail);
 
 private:
-	std::shared_ptr<Terminal> term;
+	std::shared_ptr<Terminal> terminal;
 
 	std::vector<std::shared_ptr<Screen>> screens;
-	int currentscr=-1; //holds id of current screen
 
-	void super(); //handles super line
-	void superParse(int c); //handles input to superline
-	std::shared_ptr<Line> superLine; //stores line for super mode
+	int currentscr=-1;
 
-	int superx=0; //x position of cursor when in super mode
+	//runs super mode code
+	void super();
+
+	//handles input to superline
+	void superParse(int c);
+
+	//stores line for super mode
+	std::shared_ptr<Line> superLine;
+
+	//x position of cursor when in super mode
+	int superx=0;
 
 	int tabsize=4;
 
-	std::shared_ptr<Commander> commands; //pointer for storing the commander
+	std::shared_ptr<Commander> commands;
 
-	std::vector<int> mn_keys; //stores keys used by the "macronew" command
+	//stores keys used by the "macronew" command
+	std::vector<int> mn_keys;
 };
-
-#endif

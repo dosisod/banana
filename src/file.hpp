@@ -1,5 +1,4 @@
-#ifndef __FILE_HPP__
-#define __FILE_HPP__
+#pragma once
 
 #include <fstream>
 #include <string>
@@ -10,38 +9,53 @@
 
 class File {
 public:
-	File(std::string fn, int tab);
+	File(std::string filename, int tabsize);
 
-	int lines(); //number of lines in file buffer
-	std::string line(int n); //get line N from buffer
-	std::string rawLine(int n); //get rawline N from buffer
-	int linesize(int n); //get length of line N
+	//number of lines in file buffer
+	int lines();
+
+	//get lineNum from buffer
+	std::string line(int lineNum);
+
+	//get rawline "lineNum" from buffer
+	std::string rawLine(int lineNum);
+
+	//get length of line "lineNum"
+	int linesize(int lineNum);
 
 	//insert char c at line y, over x places, return modified line
-	std::string insert(int c, int x, int y);
-	std::string insert(std::string s, int x, int y);
+	std::string insert(int character, int x, int y);
+	std::string insert(std::string str, int x, int y);
 
-	int decode(int x, int y); //convert cursor "x" on line "y" into string length
+	//convert cursor "x" on line "y" into string length
+	int decode(int x, int y);
 
-	void newline(int x, int y); //insert newline at given xy
-	void delline(int y); //delete line if backspace is hit at start of line
+	//insert newline at given xy
+	void newline(int x, int y);
 
-	std::string getIndent(int n); //gets the indent at the start of the line n
+	//delete line if backspace is hit at start of line
+	void delline(int y);
+
+	//gets the indent at the start of the line n
+	std::string getIndent(int lineNum);
 
 	void save();
 	void saveas(std::string fn);
 
-	std::string getfn(); //returns filename
+	std::string getfn();
 
 private:
 	std::string filename;
 
-	std::fstream stream; //stream is here as it can be used when reading and writing
-	std::vector<std::shared_ptr<Line>> buffer; //contains the lines of the file
+	//stream is here as it can be used when reading and writing
+	std::fstream stream;
 
-	bool eol=false; //add extra eol (newline) after file is written
+	//contains the lines of the file
+	std::vector<std::shared_ptr<Line>> buffer;
 
-	int tabsize=4; //overriden when initiated
+	//add extra eol (newline) after file is written
+	bool eol=false;
+
+	//overriden when initiated
+	int tabsize=4;
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef __COMMAND_HPP__
-#define __COMMAND_HPP__
+#pragma once
 
 #include <functional>
 #include <string>
@@ -7,19 +6,19 @@
 
 class Command {
 public:
-	//c is a space-seperated list of command names
-	//eg, "save s" will mean that "save" and "s" are both valid command names
-	//f is a lambda to be ran when the command is activated
-	Command(std::string c, std::function<void(std::string)> f);
-	Command(std::string c, std::function<void()> f);
+	//call is a space-seperated list of command names
+	//func is a lambda to be ran when the command is activated
+	Command(std::string call, std::function<void(std::string)> func);
+	Command(std::string call, std::function<void()> func);
 
-	bool check(std::string s); //check is string is a valid command name
-	void run(std::string s); //runs the internal function
+	//check if string is a valid command name
+	bool check(std::string command);
+
+	//runs func
+	void run(std::string command);
 
 private:
 	std::vector<std::string> calls;
 
 	std::function<void(std::string)> func;
 };
-
-#endif

@@ -1,29 +1,30 @@
-#ifndef __LINE_HPP__
-#define __LINE_HPP__
+#pragma once
 
 #include <string>
 
 class Line {
 public:
-	//creates a new line object from string, and tabsize
 	Line(std::string str, int tab);
 
-	std::string insert(int c, int x);
+	//gets tab-parsed string
+	std::string get();
+
+	std::string insert(int character, int x);
 	std::string insert(std::string s, int x);
 
-	std::string get(); //gets tab-parsed string
-	std::string getRaw(); //returns raw string
-	std::string substr(int s); //substr using getRaw and decode
-	std::string substr(int s, int e); //substr using getRaw and decode
+	std::string getRaw();
 
-	int size(); //returns size of get()
+	std::string substr(int start);
+	std::string substr(int start, int ende);
 
-	int decode(int x); //find where the cursor really is in the string
+	int size();
+
+	//find where the cursor really is in the string
+	int decode(int x);
 
 private:
-	std::string str; //string containing line data
+	std::string str;
 
-	int tabsize=4; //tabs are rendered as N spaces, and but will still be tabs after saving
+	//width of tab in spaces
+	int tabsize=4;
 };
-
-#endif

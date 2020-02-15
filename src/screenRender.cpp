@@ -2,8 +2,6 @@
 
 #include "screen.hpp"
 
-//This file contains sections related to rendering the screen
-
 void Screen::render() {
 	render(filey, 0);
 }
@@ -12,39 +10,56 @@ void Screen::render(int fy, int ty) {
 	int tmpx=currx;
 	int tmpy=curry;
 
-	term->move(0, ty); //force go to home
+	terminal->move(0, ty);
 
-	int lines=file->lines()-fy; //dont want to call this every time
+	//dont want to call this every time
+	int lines=file->lines() - fy;
 
-	for (int i=0;i<term->gety()-ty;i++) { //must go through all lines to fully clear screen
-		if (i<lines) {
-			attron(COLOR_PAIR(1)); //switch to black on yellow
+	//must go through all lines to fully clear screen
+	for (int i=0 ; i < terminal->gety() - ty ; i++) {
+		if (i < lines) {
+			attron(COLOR_PAIR(1));
 
-			int space=ruler-(int)(std::log10(i+fy+1)+1); //calculate left spacing
-			if (space>=0) term->write(std::string(space, ' '));
+			//calculate left spacing
+			int space=ruler - (int)(std::log10(i + fy + 1) + 1);
+			if (space >= 0) {
+				terminal->write(std::string(space, ' '));
+			}
 
-			term->write(std::to_string(i+fy+1)+" "); //print line number
+			//print line number
+			terminal->write(std::to_string(i + fy + 1) + " ");
 
-			attron(COLOR_PAIR(2)); //switch to white on black
+			attron(COLOR_PAIR(2));
 
-			//display line buffer
 			if (wordwrap) {
-				term->write(file->line(i+fy)+"\n");
+				terminal->write(file->line(i + fy) + "\n");
 			}
 			else {
-				term->write(file->line(i+fy).substr(0, term->getx()-ruler-2)+"\n");
+				terminal->write(
+					file->line(i + fy).substr(
+						0,
+						terminal->getx() - ruler - 2
+					) + "\n"
+				);
 			}
 		}
 		else {
 			attron(COLOR_PAIR(2));
-			term->write("\n"); //put something to make sure line clears
+			terminal->write("\n");
 		}
 	}
-	setxy(tmpx, tmpy); //move back to where the cursor was before
 
-	term->move( //move cursor to start of closest character to the right
-		encode(file->rawLine(realy()).substr(0, decode(currx, realy())))
-		+ruler+1,
-		curry+ty
+	//move back to where the cursor was before
+	setxy(tmpx, tmpy);
+
+	//move cursor to start of closest character to the right
+	terminal->move(
+		encode(
+			file->rawLine(realy()).substr(
+				0,
+				decode(currx, realy())
+			)
+		) + ruler + 1,
+		curry + ty
 	);
 }
