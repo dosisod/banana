@@ -2,7 +2,7 @@
 
 banana: Slim terminal text-editor
 
-![banana-in-use](/doc/banana.png)
+![banana-in-use](/doc/banana.gif)
 
 [An introduction to banana](/doc/intro.md)
 
