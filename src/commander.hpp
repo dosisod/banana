@@ -8,14 +8,14 @@ class Commander {
 public:
 	Commander(std::vector<std::shared_ptr<Command>> commands);
 
-	const typedef std::pair<std::string, std::string> params;
+	const typedef std::pair<std::string, std::string> Params;
 
 	//returns parsed parameters
-	params parse(std::string str);
+	Params parse(std::string str) const;
 
 	//parses and call function accordingly
-	void run(std::string str);
+	void run(std::string str) const;
 
 private:
-	std::vector<std::shared_ptr<Command>> commands;
+	const std::vector<std::shared_ptr<Command>> commands;
 };

@@ -10,21 +10,21 @@ class Terminal {
 public:
 	Terminal();
 
-	void write(std::string str);
+	void write(std::string str) const;
 
-	void clear(int y);
+	void clear(int y) const;
 
 	//clear line "y" and write "str"
-	void zero(int y, std::string str);
+	void zero(int y, std::string str) const;
 
 	//updates terminal x and y
 	void update();
 
-	void move(int x, int y);
+	void move(int x, int y) const;
 
 	//max x and y of terminal
-	int getx();
-	int gety();
+	int getx() const;
+	int gety() const;
 
 private:
 	WINDOW* window;

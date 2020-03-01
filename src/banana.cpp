@@ -5,7 +5,7 @@
 #include "terminal.hpp"
 
 int main (int argc, char *argv[]) {
-	std::shared_ptr<Terminal> term=std::make_shared<Terminal>();
+	const std::shared_ptr<Terminal> term=std::make_shared<Terminal>();
 	ScreenMaster master { term };
 
 	if (argc==1) {

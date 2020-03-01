@@ -5,8 +5,7 @@ void Screen::home() {
 }
 
 void Screen::setxy(int x, int y) {
-	int diffx=x - currx;
-	int diffy=y - curry;
+	const int diffy=y - curry;
 
 	if (y < 0) {
 		//cursor is above screen, move file offset up
@@ -82,22 +81,25 @@ void Screen::setxy(int x, int y) {
 }
 
 void Screen::delta(int dx, int dy) {
-	setxy(dx + currx, dy + curry);
+	setxy(
+		dx + currx,
+		dy + curry
+	);
 }
 
-char Screen::charCurrent() {
+char Screen::charCurrent() const {
 	return charOver(0, 0);
 }
 
-char Screen::charAt(int x, int y) {
+char Screen::charAt(int x, int y) const {
 	return file->rawLine(y)[decode(x, y)];
 }
 
-char Screen::charOver(int x, int y) {
+char Screen::charOver(int x, int y) const {
 	x--;
 
 	if (realy() + y >= 0 && realy() + y < file->lines()) {
-		int decoded=decode(currx + x, realy() + y);
+		const int decoded=decode(currx + x, realy() + y);
 
 		if (decoded >= 0 && decoded < file->linesize(realy() + y)) {
 			//cursor pos is OK
@@ -108,6 +110,6 @@ char Screen::charOver(int x, int y) {
 	return 0;
 }
 
-int Screen::realy() {
+int Screen::realy() const {
 	return curry + filey;
 }

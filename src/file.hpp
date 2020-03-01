@@ -12,16 +12,16 @@ public:
 	File(std::string filename, int tabsize);
 
 	//number of lines in file buffer
-	int lines();
+	int lines() const;
 
 	//get lineNum from buffer
-	std::string line(int lineNum);
+	std::string line(int lineNum) const;
 
 	//get rawline "lineNum" from buffer
-	std::string rawLine(int lineNum);
+	std::string rawLine(int lineNum) const;
 
 	//get length of line "lineNum"
-	int linesize(int lineNum);
+	int linesize(int lineNum) const;
 
 	//insert char c at line y, over x places, return modified line
 	std::string insert(int character, int x, int y);
@@ -37,12 +37,12 @@ public:
 	void delline(int y);
 
 	//gets the indent at the start of the line n
-	std::string getIndent(int lineNum);
+	std::string getIndent(int lineNum) const;
 
 	void save();
 	void saveas(std::string fn);
 
-	std::string getfn();
+	std::string getfn() const;
 
 private:
 	std::string filename;
@@ -54,7 +54,7 @@ private:
 	std::vector<std::shared_ptr<Line>> buffer;
 
 	//add extra eol (newline) after file is written
-	bool eol=false;
+	const bool eol=false;
 
 	//overriden when initiated
 	int tabsize=4;

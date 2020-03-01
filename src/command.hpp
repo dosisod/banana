@@ -12,13 +12,13 @@ public:
 	Command(std::string call, std::function<void()> func);
 
 	//check if string is a valid command name
-	bool check(std::string command);
+	bool check(std::string command) const;
 
 	//runs func
-	void run(std::string command);
+	void run(std::string command) const;
 
 private:
 	std::vector<std::string> calls;
 
-	std::function<void(std::string)> func;
+	const std::function<void(std::string)> func;
 };

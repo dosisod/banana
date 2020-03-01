@@ -7,13 +7,13 @@ void Screen::render() {
 }
 
 void Screen::render(int fy, int ty) {
-	int tmpx=currx;
-	int tmpy=curry;
+	const int tmpx=currx;
+	const int tmpy=curry;
 
 	terminal->move(0, ty);
 
 	//dont want to call this every time
-	int lines=file->lines() - fy;
+	const int lines=file->lines() - fy;
 
 	//must go through all lines to fully clear screen
 	for (int i=0 ; i < terminal->gety() - ty ; i++) {
@@ -21,7 +21,7 @@ void Screen::render(int fy, int ty) {
 			attron(COLOR_PAIR(1));
 
 			//calculate left spacing
-			int space=ruler - (int)(std::log10(i + fy + 1) + 1);
+			const int space=ruler - (int)(std::log10(i + fy + 1) + 1);
 			if (space >= 0) {
 				terminal->write(std::string(space, ' '));
 			}

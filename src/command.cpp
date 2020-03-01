@@ -26,13 +26,13 @@ Command::Command(std::string call, std::function<void()> func) :
 		func();
 	}) {}
 
-bool Command::check(std::string command) {
+bool Command::check(std::string command) const {
 	for (auto call : calls) {
 		if (call==command) return true;
 	}
 	return false;
 }
 
-void Command::run(std::string command) {
+void Command::run(std::string command) const {
 	func(command);
 }

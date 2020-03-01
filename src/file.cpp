@@ -24,19 +24,19 @@ File::File(std::string filename, int tabsize) :
 	stream.close();
 }
 
-int File::lines() {
+int File::lines() const {
 	return buffer.size();
 }
 
-std::string File::rawLine(int lineNum) {
+std::string File::rawLine(int lineNum) const {
 	return buffer[lineNum]->getRaw();
 }
 
-std::string File::line(int lineNum) {
+std::string File::line(int lineNum) const {
 	return buffer[lineNum]->get();
 }
 
-int File::linesize(int lineNum) {
+int File::linesize(int lineNum) const {
 	return buffer[lineNum]->size();
 }
 
@@ -55,7 +55,7 @@ int File::decode(int x, int y) {
 }
 
 void File::newline(int x, int y) {
-	std::vector<std::shared_ptr<Line>>::iterator iter=buffer.begin();
+	auto iter=buffer.begin();
 
 	std::string indent=getIndent(y);
 
@@ -89,7 +89,7 @@ void File::delline(int y) {
 	buffer.erase(buffer.begin() + y);
 }
 
-std::string File::getIndent(int lineNum) {
+std::string File::getIndent(int lineNum) const {
 	std::string tmp=rawLine(lineNum);
 	int i=0;
 
@@ -127,6 +127,6 @@ void File::saveas(std::string fn) {
 	stream.close();
 }
 
-std::string File::getfn() {
+std::string File::getfn() const {
 	return filename;
 }

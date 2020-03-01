@@ -15,19 +15,19 @@ public:
 
 	void parseKey(int c);
 
-	void pause();
+	void pause()const ;
 
 	//forward -> calls to current screen
-	std::shared_ptr<Screen> operator->();
+	std::shared_ptr<Screen> operator->() const;
 
-	std::shared_ptr<Screen> screen();
+	std::shared_ptr<Screen> screen() const;
 
-	int screenid();
+	int screenid() const;
 
 	int parsenum(std::string str, int fail);
 
 private:
-	std::shared_ptr<Terminal> terminal;
+	const std::shared_ptr<Terminal> terminal;
 
 	std::vector<std::shared_ptr<Screen>> screens;
 
@@ -45,7 +45,7 @@ private:
 	//x position of cursor when in super mode
 	int superx=0;
 
-	int tabsize=4;
+	const int tabsize=4;
 
 	std::shared_ptr<Commander> commands;
 

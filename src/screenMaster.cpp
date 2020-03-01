@@ -141,11 +141,11 @@ ScreenMaster::~ScreenMaster() {
 	endwin();
 }
 
-std::shared_ptr<Screen> ScreenMaster::operator->() {
+std::shared_ptr<Screen> ScreenMaster::operator->() const {
 	return screen();
 }
 
-std::shared_ptr<Screen> ScreenMaster::screen() {
+std::shared_ptr<Screen> ScreenMaster::screen() const {
 	return screens[currentscr];
 }
 
@@ -167,7 +167,7 @@ void ScreenMaster::parseKey(int c) {
 	}
 }
 
-void ScreenMaster::pause() {
+void ScreenMaster::pause() const {
 	getch();
 }
 
@@ -268,7 +268,7 @@ void ScreenMaster::superParse(int c) {
 	}
 }
 
-int ScreenMaster::screenid() {
+int ScreenMaster::screenid() const {
 	return currentscr;
 }
 

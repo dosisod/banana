@@ -14,7 +14,7 @@ public:
 	Screen(std::shared_ptr<Terminal> terminal, int tabsize);
 	~Screen();
 
-	void pause();
+	void pause() const;
 
 	void parseKey(int c);
 	void parseKeys(std::vector<int> c);
@@ -28,9 +28,9 @@ public:
 	void setxy(int x, int y);
 	void delta(int dx, int dy);
 
-	char charCurrent();
-	char charAt(int x, int y);
-	char charOver(int x, int y);
+	char charCurrent() const;
+	char charAt(int x, int y) const;
+	char charOver(int x, int y) const;
 
 	//open new file buffer
 	void useBuffer(std::shared_ptr<File> f);
@@ -45,7 +45,7 @@ public:
 	int curry=0;
 
 	//y position relative to start of file
-	int realy();
+	int realy() const;
 
 private:
 	std::shared_ptr<Terminal> terminal;
@@ -54,18 +54,17 @@ private:
 	int filey=0;
 
 	//page up/down will move by N lines at a time
-	int page=10;
+	const int page=10;
 
 	int ruler;
-	int tabsize=4;
+	const int tabsize=4;
 
-	bool wordwrap=false;
+	const bool wordwrap=false;
 
 	//decodes cursor position when there are tabs
-	int decode();
-
-	int decode(int x, int y);
+	int decode() const;
+	int decode(int x, int y) const;
 
 	//find what the cursor position should be for a given string
-	int encode(std::string s);
+	int encode(std::string s) const;
 };

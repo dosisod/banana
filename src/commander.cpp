@@ -4,26 +4,25 @@ Commander::Commander(std::vector<std::shared_ptr<Command>> commands) :
 	commands(commands)
 	{}
 
-Commander::params Commander::parse(std::string str) {
-	int pos=(int)str.find(' ');
-
-	//default values if there is no space
-	std::string p1=str;
-	std::string p2="";
+Commander::Params Commander::parse(std::string str) const {
+	const int pos=(int)str.find(' ');
 
 	if (pos > -1) {
-		//update if there is a space
-		p1=str.substr(0, pos);
-		p2=str.substr(pos + 1);
+		//space was found, split it
+		return {
+			str.substr(0, pos),
+			str.substr(pos + 1)
+		};
 	}
 
-	return params { p1, p2 };
+	//there was no space
+	return { str, "" };
 }
 
-void Commander::run(std::string str) {
-	params p=parse(str);
+void Commander::run(std::string str) const {
+	const Params p=parse(str);
 
-	for (auto command : commands) {
+	for (const auto& command : commands) {
 		if (command->check(p.first)) {
 			command->run(p.second);
 

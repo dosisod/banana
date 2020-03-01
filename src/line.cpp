@@ -9,7 +9,7 @@ Line::Line(std::string str, int tabsize) :
 	str(str)
 	{}
 
-std::string Line::get() {
+std::string Line::get() const {
 	std::string ret="";
 	int counter=0;
 
@@ -41,24 +41,24 @@ std::string Line::get() {
 	return ret;
 }
 
-std::string Line::getRaw() {
+std::string Line::getRaw() const {
 	return str;
 }
 
-std::string Line::substr(int start) {
+std::string Line::substr(int start) const {
 	return getRaw().substr(
 		decode(start)
 	);
 }
 
-std::string Line::substr(int start, int end) {
+std::string Line::substr(int start, int end) const {
 	return getRaw().substr(
 		decode(start),
 		decode(end)
 	);
 }
 
-int Line::size() {
+int Line::size() const {
 	return get().length();
 }
 
@@ -81,7 +81,7 @@ std::string Line::insert(int character, int x) {
 }
 
 std::string Line::insert(std::string s, int x) {
-	for (auto character : str) {
+	for (const auto character : str) {
 		if (
 			!key::valid(character) ||
 			key::backspace(character) ||
@@ -96,7 +96,7 @@ std::string Line::insert(std::string s, int x) {
 	return get();
 }
 
-int Line::decode(int x) {
+int Line::decode(int x) const {
 	if (str.length()==0) {
 		return 0;
 	}
@@ -117,7 +117,7 @@ int Line::decode(int x) {
 
 		if (str[i]=='\t') {
 			//calculate tab size
-			int tmp=tabsize-(counter%tabsize);
+			const int tmp=tabsize-(counter%tabsize);
 
 			if (counter < x && x <(counter + tmp)) {
 				//cursor is between a tab, return index of tab

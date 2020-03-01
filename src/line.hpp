@@ -7,24 +7,24 @@ public:
 	Line(std::string str, int tab);
 
 	//gets tab-parsed string
-	std::string get();
+	std::string get() const;
 
 	std::string insert(int character, int x);
 	std::string insert(std::string s, int x);
 
-	std::string getRaw();
+	std::string getRaw() const;
 
-	std::string substr(int start);
-	std::string substr(int start, int ende);
+	std::string substr(int start) const;
+	std::string substr(int start, int ende) const;
 
-	int size();
+	int size() const;
 
 	//find where the cursor really is in the string
-	int decode(int x);
+	int decode(int x) const;
 
 private:
 	std::string str;
 
 	//width of tab in spaces
-	int tabsize=4;
+	const int tabsize=4;
 };

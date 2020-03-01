@@ -3,14 +3,14 @@
 #include "screen.hpp"
 #include "keys.hpp"
 
-void Screen::pause() {
+void Screen::pause() const {
 	getch();
 }
 
 void Screen::parseKey(int c) {
 	if (key::del(c)) {
-		int tmpy=curry;
-		int tmpx=currx;
+		const int tmpy=curry;
+		const int tmpx=currx;
 
 		parseKey(KEY_RIGHT);
 
@@ -109,10 +109,12 @@ void Screen::parseKey(int c) {
 
 	//backspace is pressed at the start of a line
 	else if (key::backspace(c) && currx==0 && (curry + filey)!=0) {
-		int tempx=file->linesize(curry + filey - 1);
-
 		file->delline(curry + filey);
-		setxy(tempx, curry - 1);
+
+		setxy(
+			file->linesize(curry + filey - 1),
+			curry - 1
+		);
 
 		ruler=std::log10(file->lines()) + 1;
 	}
@@ -131,7 +133,7 @@ void Screen::parseKey(int c) {
 
 		//normal character was pressed
 		else {
-			int tmpx=currx;
+			const int tmpx=currx;
 
 			setxy(0, curry);
 
@@ -172,7 +174,7 @@ void Screen::parseKey(int c) {
 }
 
 void Screen::parseKeys(std::vector<int> keys) {
-	for (auto i : keys) {
+	for (const auto i : keys) {
 		parseKey(i);
 	}
 }
@@ -186,15 +188,15 @@ void Screen::useBuffer(std::string fn) {
 	useBuffer(std::make_shared<File>(fn, tabsize));
 }
 
-int Screen::decode() {
+int Screen::decode() const {
 	return decode(currx, curry);
 }
 
-int Screen::decode(int x, int y) {
+int Screen::decode(int x, int y) const {
 	return file->decode(x, y);
 }
 
-int Screen::encode(std::string str) {
+int Screen::encode(std::string str) const {
 	int counter=0;
 
 	for (int i=0 ; i < (int)str.length() ; i++) {

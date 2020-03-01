@@ -25,11 +25,11 @@ Terminal::Terminal() {
 	init_pair(3, COLOR_BLACK, COLOR_WHITE);
 }
 
-void Terminal::write(std::string s) {
+void Terminal::write(std::string s) const {
 	addstr(s.c_str());
 }
 
-void Terminal::clear(int y) {
+void Terminal::clear(int y) const {
 	//goto start of line
 	move(0, y);
 
@@ -39,7 +39,7 @@ void Terminal::clear(int y) {
 	move(0, y);
 }
 
-void Terminal::zero(int y, std::string str) {
+void Terminal::zero(int y, std::string str) const {
 	clear(y);
 	write(str);
 }
@@ -48,14 +48,14 @@ void Terminal::update() {
 	getmaxyx(window, y, x);
 }
 
-void Terminal::move(int x, int y) {
+void Terminal::move(int x, int y) const {
 	wmove(window, y, x);
 }
 
-int Terminal::getx() {
+int Terminal::getx() const{
 	return x;
 }
 
-int Terminal::gety() {
+int Terminal::gety() const {
 	return y;
 }
